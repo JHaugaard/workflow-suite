@@ -1,6 +1,6 @@
 ---
 name: tech-stack-advisor
-description: Analyze project requirements and recommend appropriate technology stacks with detailed rationale. Provides primary recommendation, alternatives, and ruled-out options with explanations. Considers John's learning goals, infrastructure, and project constraints. Use after requirements gathering, before project-spinup skill.
+description: Analyze project requirements and recommend appropriate technology stacks with detailed rationale. Provides primary recommendation, alternatives, and ruled-out options with explanations. Considers John's learning goals, infrastructure, and project constraints. Use after requirements gathering, before deployment-advisor skill.
 allowed-tools: [Read, Grep, Glob, WebSearch, Write]
 ---
 
@@ -829,4 +829,4 @@ User: "Should I use Next.js or Laravel for my project management app?"
 **Skill Version**: 1.0
 **Created**: 2025-11-04
 **For**: John's strategic tech stack decisions
-**Use Before**: project-spinup skill
+**Use Before**: deployment-advisor skill
