@@ -3,7 +3,7 @@
 ## TL;DR
 
 **What**: Generates personalized project foundations with comprehensive claude.md files
-**When**: After tech-stack-advisor and hosting-advisor
+**When**: After tech-stack-advisor and deployment-advisor
 **Output**: Foundation + Learning Mode prompts OR complete scaffolding
 
 ---
@@ -13,14 +13,14 @@
 ### Invoke the Skill
 
 ```
-Say to Claude Code: "Use the project-starter skill to initialize my project"
+Say to Claude Code: "Use the project-spinup skill to initialize my project"
 ```
 
 You'll be asked for:
 - Project name (kebab-case, e.g., "recipe-manager")
 - Project description
 - Tech stack (from tech-stack-advisor)
-- Hosting plan (from hosting-advisor)
+- Hosting plan (from deployment-advisor)
 - Complexity level: simple/standard/complex (default: standard)
 - Learning mode: true/false (default: true)
 - Special features (auth, real-time, file uploads, etc.)
@@ -175,14 +175,14 @@ The skill adapts to any stack provided by tech-stack-advisor. Just provide the d
 └─────────────────────────────────────────────────┘
                     ↓
 ┌─────────────────────────────────────────────────┐
-│ 3. Run hosting-advisor                         │
+│ 3. Run deployment-advisor                         │
 │    - Recommends hosting approach               │
 │    - Suggests deployment workflow              │
 │    - Estimates costs                           │
 └─────────────────────────────────────────────────┘
                     ↓
 ┌─────────────────────────────────────────────────┐
-│ 4. Invoke project-starter ← YOU ARE HERE       │
+│ 4. Invoke project-spinup ← YOU ARE HERE       │
 │    - Generates foundation or full scaffold     │
 │    - Creates comprehensive claude.md           │
 │    - Sets up Docker environment                │
@@ -235,8 +235,8 @@ All of this context is automatically included in every claude.md file generated.
 You: "I want to learn Next.js by building a recipe manager"
 
 1. Run tech-stack-advisor → recommends Next.js + Supabase
-2. Run hosting-advisor → recommends Vercel or Hostinger VPS
-3. Invoke project-starter with learning_mode=true
+2. Run deployment-advisor → recommends Vercel or Hostinger VPS
+3. Invoke project-spinup with learning_mode=true
 4. Follow guided steps in claude.md
 5. Build incrementally, understanding each layer
 ```
@@ -247,7 +247,7 @@ You: "I want to learn Next.js by building a recipe manager"
 You: "I need a quick prototype for a client meeting tomorrow"
 
 1. Skip meta-skills (you already know what to use)
-2. Invoke project-starter with learning_mode=false
+2. Invoke project-spinup with learning_mode=false
 3. Provide tech stack manually: "Next.js + Supabase"
 4. Skill generates everything immediately
 5. Configure .env, run docker, start coding
@@ -261,8 +261,8 @@ You: "I want to compare Next.js vs Laravel for this project"
 
 1. Run tech-stack-advisor → get comparison
 2. Create two projects:
-   - project-starter for "recipe-manager-nextjs" (learning_mode=true)
-   - project-starter for "recipe-manager-laravel" (learning_mode=true)
+   - project-spinup for "recipe-manager-nextjs" (learning_mode=true)
+   - project-spinup for "recipe-manager-laravel" (learning_mode=true)
 3. Build same feature in both
 4. Compare experience, performance, complexity
 5. Choose winner, continue with that stack
@@ -273,7 +273,7 @@ You: "I want to compare Next.js vs Laravel for this project"
 ```
 You: "I've built 3 Next.js projects, starting another one"
 
-1. Invoke project-starter with learning_mode=false
+1. Invoke project-spinup with learning_mode=false
 2. Everything generated immediately
 3. Modify generated code to fit specific needs
 4. Start building features right away
@@ -455,19 +455,19 @@ Add your own steps to the "Next Steps" section in claude.md:
 
 ### Invoke with Defaults
 ```
-"Use project-starter skill for my new project"
+"Use project-spinup skill for my new project"
 → Learning Mode, standard complexity
 ```
 
 ### Invoke Quick Start
 ```
-"Use project-starter skill with quick start mode"
+"Use project-spinup skill with quick start mode"
 → Full scaffolding immediately
 ```
 
 ### Specify Everything
 ```
-"Use project-starter skill:
+"Use project-spinup skill:
 - Project: recipe-manager
 - Stack: Next.js 15 + Supabase
 - Complexity: standard

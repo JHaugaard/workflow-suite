@@ -1,6 +1,6 @@
 ---
 name: tech-stack-advisor
-description: Analyze project requirements and recommend appropriate technology stacks with detailed rationale. Provides primary recommendation, alternatives, and ruled-out options with explanations. Considers John's learning goals, infrastructure, and project constraints. Use after requirements gathering, before project-starter skill.
+description: Analyze project requirements and recommend appropriate technology stacks with detailed rationale. Provides primary recommendation, alternatives, and ruled-out options with explanations. Considers John's learning goals, infrastructure, and project constraints. Use after requirements gathering, before project-spinup skill.
 ---
 
 # Tech Stack Advisor Meta-Skill
@@ -13,7 +13,7 @@ This meta-skill helps you make informed technology stack decisions by analyzing 
 
 **Invoke this skill**:
 - ✅ After brainstorming project goals and features
-- ✅ Before invoking project-starter skill
+- ✅ Before invoking project-spinup skill
 - ✅ When comparing multiple tech stack options
 - ✅ When unsure which framework/language fits best
 - ✅ When learning goals conflict with project needs
@@ -95,7 +95,7 @@ Generate a comprehensive recommendation including:
 4. **Tech Stack Details**: Complete breakdown of recommended stack
 5. **Learning Opportunities**: What this stack will teach
 6. **Cost Analysis**: Hosting and service costs
-7. **Next Steps**: How to proceed (usually: invoke hosting-advisor next)
+7. **Next Steps**: How to proceed (usually: invoke deployment-advisor next)
 
 ### Step 4: Output Format
 
@@ -249,16 +249,16 @@ Cloud/Managed Option: ${Z}/month (likely much higher)
    - Curious about ruled-out option Y? I can explain when it's better
 
 2. If you agree with PRIMARY recommendation:
-   → Invoke hosting-advisor skill next
-   Say: "Use hosting-advisor skill for {primary stack}"
+   → Invoke deployment-advisor skill next
+   Say: "Use deployment-advisor skill for {primary stack}"
 
 3. If you want to explore alternatives:
    → Tell me which alternative interests you
    Say: "Tell me more about Alternative 1" or "Compare Alternative 1 vs 2"
 
 4. After hosting decision:
-   → Invoke project-starter skill
-   Say: "Use project-starter skill with {chosen stack} and {hosting plan}"
+   → Invoke project-spinup skill
+   Say: "Use project-spinup skill with {chosen stack} and {hosting plan}"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -637,4 +637,4 @@ User: "Should I use Next.js or Laravel for my project management app?"
 **Skill Version**: 1.0
 **Created**: 2025-11-04
 **For**: John's strategic tech stack decisions
-**Use Before**: project-starter skill
+**Use Before**: project-spinup skill

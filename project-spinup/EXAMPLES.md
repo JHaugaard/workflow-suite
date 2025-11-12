@@ -1,6 +1,6 @@
-# Project Starter - Example Scenarios
+# Project Spinup - Example Scenarios
 
-This document shows concrete examples of what project-starter generates for different tech stacks and modes.
+This document shows concrete examples of what project-spinup generates for different tech stacks and modes.
 
 ---
 
@@ -817,7 +817,7 @@ You're ready for Quick Start Mode when:
 
 ## Conclusion
 
-The project-starter skill adapts to your learning journey:
+The project-spinup skill adapts to your learning journey:
 
 **Beginning**: Use Learning Mode extensively
 **Intermediate**: Mix of both modes

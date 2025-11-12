@@ -2,7 +2,7 @@
 
 ## Skill Overview
 
-**Purpose:** Transform rough project ideas into problem-focused, learning-appropriate project briefs that preserve learning opportunities and feed cleanly into the Skills workflow (tech-stack-advisor → hosting-advisor → project-starter).
+**Purpose:** Transform rough project ideas into problem-focused, learning-appropriate project briefs that preserve learning opportunities and feed cleanly into the Skills workflow (tech-stack-advisor → deployment-advisor → project-spinup).
 
 **When to Use:** When you have a new project idea and want to create a non-technical brief that focuses on WHAT to build (not HOW), preventing the PRD Quality Paradox where over-detailed specifications bypass learning opportunities.
 
@@ -14,20 +14,135 @@
 
 When invoked, this skill will:
 
-1. **Present a simple template** for you to fill in with your idea
-2. **Read your responses** and analyze for completeness and appropriate detail level
-3. **Ask clarifying questions** in batches to fill gaps and expand understanding
-4. **Detect over-specification** and redirect if you start specifying HOW instead of WHAT
-5. **Quarantine tech thoughts** in a separate section if you mention technology ideas
-6. **Generate a polished brief** in the appropriate format
-7. **Ask where to save** the output file
-8. **Confirm next steps** in the Skills workflow
+1. **Create PROJECT-MODE.md** to declare your learning intent (LEARNING/DELIVERY/BALANCED)
+2. **Present a simple template** for you to fill in with your idea
+3. **Read your responses** and analyze for completeness and appropriate detail level
+4. **Ask clarifying questions** in batches to fill gaps and expand understanding
+5. **Detect over-specification** and redirect if you start specifying HOW instead of WHAT
+6. **Quarantine tech thoughts** in a separate section if you mention technology ideas
+7. **Generate a polished brief** in the appropriate format
+8. **Ask where to save** the output file
+9. **Confirm next steps** in the Skills workflow
 
 ---
 
 ## Instructions for Claude Code
 
 When this skill is invoked, follow this workflow:
+
+### Phase 0: Create PROJECT-MODE.md
+
+Before collecting any project information, you MUST create a PROJECT-MODE.md file in the current directory. This file declares the user's learning intent and workflow commitment, which will guide all subsequent skills.
+
+**Prompt the user:**
+
+"Before we start, I need to understand your learning intent for this project. This will help shape how the entire Skills workflow (tech-stack-advisor → deployment-advisor → project-spinup) guides your learning.
+
+**Which mode best fits your project?**
+
+**LEARNING Mode** (Recommended for skill development)
+- You want to learn about technology choices and trade-offs
+- Willing to explore multiple options and understand alternatives
+- Timeline is flexible, learning is a primary goal
+- Skills workflow will include detailed exploration and decision checkpoints
+
+**DELIVERY Mode** (For time-constrained projects)
+- You need to ship quickly with minimal learning overhead
+- Already know your technology stack or constraints
+- Timeline is tight, speed is critical
+- Skills workflow will be streamlined and efficient
+
+**BALANCED Mode** (Flexible approach)
+- Want both learning AND reasonable delivery speed
+- Willing to explore but also pragmatic about time
+- Want guidance but maintain flexibility
+- Skills workflow will offer both detailed and quick-path options
+
+**Your choice:** [LEARNING / DELIVERY / BALANCED]"
+
+**After user selects, create PROJECT-MODE.md:**
+
+```markdown
+# PROJECT-MODE.md
+## Workflow Declaration
+
+**Mode:** [LEARNING / DELIVERY / BALANCED]
+
+**Decision Date:** [today's date]
+
+**What this means:**
+
+This file declares the workflow approach for this project's Skills journey (brief → tech-stack → deployment → spinup).
+
+### Mode Details
+
+[If LEARNING:]
+- You're prioritizing understanding technology trade-offs and learning opportunities
+- Subsequent skills will include detailed exploration phases and checkpoints
+- You're willing to spend time understanding alternatives
+- This supports deeper learning about your tech stack and architecture
+
+[If DELIVERY:]
+- You're prioritizing speed and efficiency
+- Subsequent skills will provide streamlined workflows with quick decisions
+- Checkpoints will be minimal
+- Focus is on getting a solid foundation quickly
+
+[If BALANCED:]
+- You want both learning and reasonable speed
+- Subsequent skills will offer flexible pathways
+- You can skip detailed phases if needed but will be given the option
+- Best of both worlds, with trade-offs acknowledged
+
+---
+
+## Workflow Commitments
+
+**I commit to:**
+- Using this PROJECT-MODE.md to inform all subsequent decisions
+- Being honest about trade-offs in tech and deployment choices
+- Following the appropriate checkpoint level for this mode
+- Consulting this file if clarification is needed on strictness level
+
+**This mode can be changed by:**
+- Explicitly updating this file and committing the change
+- Requesting a "mode adjustment" from any subsequent skill
+
+---
+
+## Anti-Bypass Protections
+
+This mode prevents the "Over-Specification Problem" (detailed brief that bypasses learning).
+
+**What this protects against:**
+- Jumping to implementation without exploring options
+- Skipping important decision checkpoints
+- Over-specifying the brief to bypass the workflow
+
+**How it works:**
+- Each skill in the workflow will check this file
+- Checkpoint strictness is based on this mode
+- Brief quality detection will reference this mode
+- Global skipping of ALL checkpoints is not allowed in LEARNING/BALANCED modes
+
+---
+
+## Success Criteria
+
+Project is successful when:
+- Brief clearly describes the problem and goals
+- Tech stack recommendation is informed by trade-off analysis
+- Deployment strategy is documented
+- Project foundation is scaffolded with learning roadmap
+```
+
+Save this file as PROJECT-MODE.md in the current directory (where the user is working). Confirm with user:
+
+"✅ Created PROJECT-MODE.md with MODE: [user's choice]
+
+This file will guide the entire Skills workflow. Each subsequent skill will check this file to determine checkpoint strictness and provide appropriate guidance for your [LEARNING/DELIVERY/BALANCED] mode."
+
+---
 
 ### Phase 1: Present Template
 
@@ -307,8 +422,8 @@ The following features are explicitly not included:
 
 1. **Review this brief** - Ensure it captures your vision accurately
 2. **Invoke tech-stack-advisor skill** - Explore technology options based on these requirements
-3. **Invoke hosting-advisor skill** - Plan deployment strategy
-4. **Invoke project-starter skill** - Create foundation and learning roadmap
+3. **Invoke deployment-advisor skill** - Plan deployment strategy
+4. **Invoke project-spinup skill** - Create foundation and learning roadmap
 
 **Ready to proceed?** Invoke the tech-stack-advisor skill to explore technology options for this project.
 ```
@@ -339,18 +454,39 @@ Wait for user response, then save the file to the specified location.
 
 ---
 
-### Phase 6: Confirm Next Steps
+### Phase 6: Confirm Next Steps & Workflow Status
 
-After saving, confirm:
+After saving, confirm with workflow state visibility:
 
 "✅ Project brief saved to [location]
 
-**Next Steps:**
-This brief is ready to feed into your Skills workflow:
+---
 
-1. **Next: tech-stack-advisor** - Explore technology options
-2. **Then: hosting-advisor** - Plan deployment strategy
-3. **Then: project-starter** - Create foundation with learning roadmap
+## Workflow Status
+
+**Phase 0: Project Brief** ✓ COMPLETE
+- PROJECT-MODE.md created (Mode: [user's mode])
+- Project brief refined and polished
+- Ready for next phase
+
+**Phase 1 of 3: Tech Stack Selection** ⏳ PENDING
+- Invoke tech-stack-advisor to explore technology options
+- Based on your MODE ([LEARNING/DELIVERY/BALANCED]), will include appropriate guidance
+- Deliverable: Technology recommendation with trade-off analysis
+
+**Phase 2 of 3: Deployment Planning** ⏳ PENDING
+- Invoke deployment-advisor to plan deployment strategy
+- Will consider your self-hosted infrastructure and constraints
+- Deliverable: Deployment strategy document
+
+**Phase 3 of 3: Project Spinup** ⏳ PENDING
+- Invoke project-spinup to create foundation
+- Choice of Guided Setup or Quick Start based on your MODE
+- Deliverable: Project foundation with learning roadmap
+
+---
+
+**Next Steps:**
 
 Would you like to invoke tech-stack-advisor now, or would you like to review/refine the brief first?"
 
@@ -442,9 +578,9 @@ problem-focused brief.md
     ↓
 tech-stack-advisor skill (explore tech options)
     ↓
-hosting-advisor skill (plan deployment)
+deployment-advisor skill (plan deployment)
     ↓
-project-starter skill (create foundation)
+project-spinup skill (create foundation)
     ↓
 [User decides implementation approach]
 ```
@@ -458,13 +594,77 @@ project-starter skill (create foundation)
 After using this skill 2-3 times, consider adding:
 - Support for different project types (hardware, content, research)
 - Customizable question batches based on project category
-- Version tracking for evolving briefs
-- Integration with PROJECT-MODE.md creation
+- Support for brief versioning and evolution
+- Brief comparison and diff tools
 
 For now, keep it simple and focused on software/app projects.
 
 ---
 
-**Skill Version:** 1.0 (MVP)
-**Created:** 2025-01-08
+## Version History
+
+### v1.1 (2025-01-11)
+**Major Enhancements (Phase 2 Refinements)**
+
+**What's New:**
+- **PROJECT-MODE.md Auto-Creation** (HIGH PRIORITY)
+  - Mandatory mode selection at skill start (LEARNING/DELIVERY/BALANCED)
+  - Auto-generates PROJECT-MODE.md file with workflow commitments
+  - Anti-bypass protections documented
+  - Subsequent skills will use this to determine checkpoint strictness
+
+- **Workflow State Visibility** (MEDIUM PRIORITY)
+  - Added "Phase 0: Project Brief" status indicator at completion
+  - Clear visualization of next steps (3-phase Skills workflow)
+  - MODE-aware guidance for next skill
+  - Progress tracking throughout workflow
+
+**Why These Improvements Matter:**
+- Addresses the "Over-Specification Problem" from SmugMug project
+- Forces upfront declaration of learning intent
+- Enables other skills to enforce appropriate checkpoint levels
+- Prevents workflow bypass with detailed briefs
+- Maintains learning opportunities even with experienced users
+
+**Integration Notes:**
+- PROJECT-MODE.md must be created before brief collection
+- Other skills (tech-stack-advisor, deployment-advisor, project-spinup) will reference this file
+- Mode can be changed by user if workflow needs adjustment
+
+**Design Rationale:**
+This skill now serves as the gateway to the entire Skills workflow, establishing the learning context that shapes all subsequent decision-making and checkpoints. By declaring mode upfront, we preserve learning opportunities while respecting different user needs (learning vs delivery vs balanced).
+
+---
+
+### v1.0 (2025-01-08)
+**Initial Release (MVP)**
+
+**Features:**
+- Problem-focused brief template
+- Over-specification detection
+- Tech thought quarantine section
+- Clarifying question batches
+- Polished brief generation
+- Next-step workflow guidance
+
 **Purpose:** Prevent PRD Quality Paradox, preserve learning opportunities
+
+---
+
+## Cross-References & Further Reading
+
+**Related Background Documents:**
+- [after-action-report.md](../background-docs/after-action-report.md) - Details on Over-Specification Problem and SmugMug project lessons
+- [lovable-vs-claude-code.md](../background-docs/lovable-vs-claude-code.md) - Strategic vs tactical learning distinction
+- [done-vs-next.md](../background-docs/done-vs-next.md) - Phase 0 meta-skills positioning
+
+**Integration with Skills Workflow:**
+- First skill in 3-phase workflow (project-brief-writer → tech-stack-advisor → deployment-advisor → project-spinup)
+- PROJECT-MODE.md created here is used by all subsequent skills
+- Brief quality affects how strictly subsequent skills enforce checkpoints
+
+---
+
+**Skill Version:** 1.1
+**Last Updated:** 2025-01-11
+**Status:** Enhanced with PROJECT-MODE.md and workflow visibility

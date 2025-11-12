@@ -1,6 +1,6 @@
 ---
-name: hosting-advisor
-description: Recommend hosting strategy based on chosen tech stack and project needs. Provides deployment workflow, cost breakdown, and scaling path. Considers Hostinger infrastructure, budget, and complexity tolerance. Use after tech-stack-advisor, before project-starter skill.
+name: deployment-advisor
+description: Recommend hosting strategy based on chosen tech stack and project needs. Provides deployment workflow, cost breakdown, and scaling path. Considers Hostinger infrastructure, budget, and complexity tolerance. Use after tech-stack-advisor, before project-spinup skill.
 ---
 
 # Hosting Advisor Meta-Skill
@@ -13,7 +13,7 @@ This meta-skill recommends hosting and deployment strategies tailored to your ch
 
 **Invoke this skill**:
 - ✅ After tech-stack-advisor has recommended a tech stack
-- ✅ Before invoking project-starter skill
+- ✅ Before invoking project-spinup skill
 - ✅ When evaluating hosting options for existing projects
 - ✅ When project outgrows current hosting and needs scaling
 - ✅ When comparing self-hosted vs managed services
@@ -120,7 +120,7 @@ Generate a comprehensive recommendation including:
 5. **Alternative Options**: Other viable approaches
 6. **Monitoring & Maintenance**: What to track and how often
 7. **Backup Strategy**: How to backup and restore
-8. **Next Steps**: How to proceed (usually: invoke project-starter)
+8. **Next Steps**: How to proceed (usually: invoke project-spinup)
 
 ### Step 4: Output Format
 
@@ -399,7 +399,7 @@ SECURITY MAINTENANCE:
 
 2. If you agree with PRIMARY recommendation:
    → Proceed to project initialization
-   Say: "Use project-starter skill with:
+   Say: "Use project-spinup skill with:
          - Tech stack: {from tech-stack-advisor}
          - Hosting: {this recommendation}
          - Learning mode: {true/false}"
@@ -831,7 +831,7 @@ The goal is to provide John with a clear, actionable hosting plan that fits his 
 
 ### Example 1: From tech-stack-advisor output
 ```
-User: "Use hosting-advisor skill for the Next.js + Supabase stack we just decided on"
+User: "Use deployment-advisor skill for the Next.js + Supabase stack we just decided on"
 
 → Skill analyzes Next.js + Supabase requirements, recommends self-hosted on
 existing VPS since John has Supabase already, provides Docker deployment
@@ -864,4 +864,4 @@ User: "For my Next.js app, compare hosting on Vercel vs my VPS"
 **Created**: 2025-11-04
 **For**: John's hosting decisions
 **Use After**: tech-stack-advisor skill
-**Use Before**: project-starter skill
+**Use Before**: project-spinup skill

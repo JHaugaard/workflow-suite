@@ -1,9 +1,9 @@
 ---
-name: project-starter
-description: Generate complete project foundations with personalized claude.md, Docker setup, and project structure. Supports Learning Mode (guided setup) or Quick Start Mode (full scaffolding). Use after tech-stack-advisor and hosting-advisor to initialize new projects with John's workflow, infrastructure, and best practices.
+name: project-spinup
+description: Generate complete project foundations with personalized claude.md, Docker setup, and project structure. Supports Learning Mode (guided setup) or Quick Start Mode (full scaffolding). Use after tech-stack-advisor and deployment-advisor to initialize new projects with John's workflow, infrastructure, and best practices.
 ---
 
-# Project Starter Skill
+# Project Spinup Skill
 
 ## Purpose
 
@@ -13,7 +13,7 @@ This skill generates a complete, ready-to-code project foundation tailored to Jo
 
 Before invoking this skill, ensure:
 1. **tech-stack-advisor** skill has been run (tech stack decided)
-2. **hosting-advisor** skill has been run (deployment plan decided)
+2. **deployment-advisor** skill has been run (deployment plan decided)
 3. Project requirements/PRD documented or clearly described
 
 ## Inputs Required
@@ -29,7 +29,7 @@ When user invokes this skill, gather the following information:
    - Database system
    - Authentication approach
    - Key libraries/tools
-4. **hosting_plan** (object) - Output from hosting-advisor including:
+4. **hosting_plan** (object) - Output from deployment-advisor including:
    - Hosting provider and type (VPS, shared, PaaS)
    - Deployment workflow
    - Environment separation needs
@@ -105,7 +105,7 @@ When this skill is invoked:
 If any required inputs are missing, ask the user to provide them. Confirm:
 - Project name and description
 - Tech stack details (should come from tech-stack-advisor)
-- Hosting plan (should come from hosting-advisor)
+- Hosting plan (should come from deployment-advisor)
 - Complexity level
 - Learning mode preference
 - Special features needed
@@ -204,7 +204,7 @@ Generate a comprehensive claude.md file using this structure. Adapt each section
 **Authentication**: {Auth approach - Supabase, JWT, sessions, etc.}
 **Styling**: {CSS approach - Tailwind, CSS Modules, styled-components, etc.}
 **Testing**: {Testing frameworks}
-**Deployment**: {Hosting plan from hosting-advisor}
+**Deployment**: {Hosting plan from deployment-advisor}
 
 ### Architecture Decisions
 {Brief explanation of why this tech stack was chosen, linking to tech-stack-advisor output if available}
@@ -276,7 +276,7 @@ John maintains a self-hosted infrastructure suite on Hostinger VPS(s):
 
 ### Project-Specific Hosting
 
-**Deployment Target**: {From hosting-advisor - e.g., "Hostinger VPS via Docker"}
+**Deployment Target**: {From deployment-advisor - e.g., "Hostinger VPS via Docker"}
 **DNS**: Cloudflare (nameservers for all domains)
 **File Storage**: {Backblaze B2 or local VPS storage}
 **SSL**: Let's Encrypt via Certbot
@@ -430,7 +430,7 @@ docker compose down -v && docker compose up -d
 ## Deployment
 
 ### Deployment Workflow
-{From hosting-advisor - describe deployment process}
+{From deployment-advisor - describe deployment process}
 
 ### Deployment Checklist
 - [ ] All tests passing
@@ -1039,7 +1039,7 @@ cd {project_name}
 git init
 git checkout -b main
 git add .
-git commit -m "chore: initial project setup via project-starter skill"
+git commit -m "chore: initial project setup via project-spinup skill"
 git checkout -b dev
 ```
 
