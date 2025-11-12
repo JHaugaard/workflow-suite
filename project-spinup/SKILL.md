@@ -1,6 +1,6 @@
 ---
 name: project-spinup
-description: Generate complete project foundations with personalized claude.md, Docker setup, and project structure. Supports Learning Mode (guided setup) or Quick Start Mode (full scaffolding). Use after tech-stack-advisor and deployment-advisor to initialize new projects with John's workflow, infrastructure, and best practices.
+description: Generate complete project foundations with personalized claude.md, Docker setup, and project structure. Supports Guided Setup (step-by-step learning) or Quick Start (full scaffolding). Use after tech-stack-advisor and deployment-advisor to initialize new projects with John's workflow, infrastructure, and best practices.
 ---
 
 # Project Spinup Skill
@@ -9,12 +9,29 @@ description: Generate complete project foundations with personalized claude.md, 
 
 This skill generates a complete, ready-to-code project foundation tailored to John's development workflow, infrastructure, and the tech stack chosen via prerequisite meta-skills. It creates a comprehensive claude.md file that serves as the project's AI assistant context, along with Docker configuration, directory structure, and either guided learning prompts or full scaffolding.
 
+---
+
+## Workflow Status
+
+**You are in: Skills Phase 3 of 3** (Final skills workflow phase)
+
+**Workflow progression:**
+- ✅ Phase 0: project-brief-writer (Project brief and PROJECT-MODE.md created)
+- ✅ Phase 1: tech-stack-advisor (Technology decisions made)
+- ✅ Phase 2: deployment-advisor (Deployment strategy decided)
+- ⏳ Phase 3: project-spinup (Current - Creating project foundation)
+
+**After this skill completes:** Project foundation ready for development
+
+---
+
 ## Prerequisites
 
 Before invoking this skill, ensure:
-1. **tech-stack-advisor** skill has been run (tech stack decided)
-2. **deployment-advisor** skill has been run (deployment plan decided)
-3. Project requirements/PRD documented or clearly described
+1. **PROJECT-MODE.md** exists (created by project-brief-writer)
+2. **tech-stack-advisor** skill has been run (tech stack decided)
+3. **deployment-advisor** skill has been run (deployment plan decided)
+4. Project brief documented or clearly described
 
 ## Inputs Required
 
@@ -34,9 +51,10 @@ When user invokes this skill, gather the following information:
    - Deployment workflow
    - Environment separation needs
 5. **complexity_level** (enum: simple/standard/complex) - Default: standard
-6. **learning_mode** (boolean) - Default: true
-   - true = Learning Mode (foundation + guided prompts)
-   - false = Quick Start Mode (full scaffolding immediately)
+6. **spinup_approach** (enum: guided/quick-start) - **Ask user at start of skill**
+   - guided = Guided Setup (foundation + step-by-step learning prompts)
+   - quick-start = Quick Start (full scaffolding immediately)
+   - **Note:** This is SEPARATE from PROJECT-MODE.md (see "Spinup Approach vs PROJECT-MODE" below)
 7. **special_features** (array) - Optional features like:
    - Authentication/authorization
    - Real-time updates
@@ -44,6 +62,18 @@ When user invokes this skill, gather the following information:
    - AI/ML integration
    - Payment processing
    - etc.
+
+### Spinup Approach vs PROJECT-MODE
+
+**Important distinction:**
+
+- **PROJECT-MODE.md** (LEARNING/BALANCED/DELIVERY): Governs the *advisory* skills workflow - how much exploration, discussion, and checkpoint validation happens during tech stack and deployment decisions. This is about **strategic learning** (understanding trade-offs, evaluating options).
+
+- **spinup_approach** (Guided/Quick Start): Governs the *scaffolding* style - whether the project foundation is built step-by-step with explanations (Guided) or generated all at once (Quick Start). This is about **tactical implementation** - how familiar you are with the chosen tech stack.
+
+**Key insight:** You can be in LEARNING mode for strategic decisions but still use Quick Start for scaffolding if you're already familiar with the tech stack. Conversely, you can be in DELIVERY mode (fast strategic decisions) but use Guided Setup to learn a new framework.
+
+**How to decide:** Ask the user about their familiarity with the chosen tech stack, not just their PROJECT-MODE.
 
 ## John's Personal Context (Hardcoded Constants)
 
@@ -101,18 +131,50 @@ Use these values consistently across all generated files:
 
 When this skill is invoked:
 
+### Phase 0: Check PROJECT-MODE and Determine Spinup Approach
+
+1. **Read PROJECT-MODE.md** to understand the user's workflow commitment
+2. **Ask user about spinup approach** with MODE-informed suggestion:
+
+**Suggestion logic:**
+- If MODE = LEARNING: Suggest Guided Setup (but allow override)
+- If MODE = BALANCED: Present both options neutrally
+- If MODE = DELIVERY: Suggest Quick Start (but allow override)
+
+**Example prompt to user:**
+```
+I see you're in {MODE} mode for this project workflow.
+
+For the project scaffolding, would you prefer:
+
+1. **Guided Setup** - I'll create the foundation, then provide step-by-step prompts
+   to build out the structure incrementally. You'll learn how each layer works.
+   (Recommended if you're new to {tech stack})
+
+2. **Quick Start** - I'll generate the complete project scaffolding immediately
+   with all boilerplate code and configuration.
+   (Recommended if you're familiar with {tech stack})
+
+{If LEARNING mode: "Based on your LEARNING mode, I recommend Guided Setup to maximize learning, but you can choose Quick Start if you're already comfortable with this stack."}
+
+{If DELIVERY mode: "Based on your DELIVERY mode, I recommend Quick Start for speed, but Guided Setup is available if this is a new tech stack for you."}
+
+Which approach would you like?
+```
+
+3. **Store user's choice** in `spinup_approach` variable
+
 ### Step 1: Gather Information
 If any required inputs are missing, ask the user to provide them. Confirm:
 - Project name and description
 - Tech stack details (should come from tech-stack-advisor)
 - Hosting plan (should come from deployment-advisor)
 - Complexity level
-- Learning mode preference
 - Special features needed
 
 ### Step 2: Generate Core Files
 
-**ALWAYS CREATE** (regardless of learning_mode):
+**ALWAYS CREATE** (regardless of spinup_approach):
 
 1. **claude.md** - Comprehensive project context (see template below)
 2. **docker-compose.yml** - Local development environment
@@ -122,9 +184,9 @@ If any required inputs are missing, ask the user to provide them. Confirm:
 6. **.env.example** - Required environment variables
 7. **Git initialization guidance** - Commands for user to run
 
-### Step 3: Learning Mode vs Quick Start Mode
+### Step 3: Guided Setup vs Quick Start
 
-#### If learning_mode = true (LEARNING MODE):
+#### If spinup_approach = guided (GUIDED SETUP):
 Generate foundation only, plus detailed "Next Steps" section in claude.md with:
 - Step-by-step prompts to give Claude Code
 - Explanation of what each step creates
@@ -134,7 +196,7 @@ Generate foundation only, plus detailed "Next Steps" section in claude.md with:
 
 User will then incrementally ask Claude Code to build out the project.
 
-#### If learning_mode = false (QUICK START MODE):
+#### If spinup_approach = quick-start (QUICK START):
 Generate complete scaffolding including:
 - All tech-stack-specific configuration files
 - Complete source file structure
@@ -143,12 +205,15 @@ Generate complete scaffolding including:
 - All middleware/utilities
 - Initial git commit prepared
 
-### Step 4: Provide Next Steps
+### Step 4: Provide Next Steps and Workflow Completion
+
 Tell the user:
 - What was created
-- How to start working (if Learning Mode, copy first prompt)
+- How to start working (if Guided Setup, provide first prompt to copy)
 - How to run the development environment
 - Where to find documentation
+- **Workflow completion status** (all 3 skills phases complete)
+- **What's next**: Ready to begin development
 
 ## claude.md Template
 
@@ -229,9 +294,9 @@ Generate a comprehensive claude.md file using this structure. Adapt each section
 
 #### First-Time Setup
 
-{If LEARNING MODE, include detailed next steps here - see Learning Mode Template}
+{If GUIDED SETUP, include detailed next steps here - see Guided Setup Template}
 
-{If QUICK START MODE, include standard setup commands}
+{If QUICK START, include standard setup commands}
 
 ```bash
 # Clone repository
@@ -487,8 +552,8 @@ kill -9 {pid}
 
 ## Next Steps
 
-{If LEARNING MODE: Include detailed guided steps - see template below}
-{If QUICK START MODE: Include immediate next actions}
+{If GUIDED SETUP: Include detailed guided steps - see template below}
+{If QUICK START: Include immediate next actions}
 
 ---
 
@@ -499,12 +564,12 @@ kill -9 {pid}
 
 ---
 
-## Learning Mode Template (Add to claude.md "Next Steps" section)
+## Guided Setup Template (Add to claude.md "Next Steps" section)
 
-When learning_mode = true, append this to the claude.md:
+When spinup_approach = guided, append this to the claude.md:
 
 ```markdown
-## Next Steps (Learning Mode)
+## Next Steps (Guided Setup)
 
 You now have the project foundation. Complete the setup by asking Claude Code to help you build out the structure step-by-step. This approach helps you understand each layer of the application.
 
@@ -662,9 +727,9 @@ After completing these steps, you'll have:
 
 ---
 
-## Quick Start Mode Template
+## Quick Start Template
 
-When learning_mode = false, the skill should generate ALL of the following immediately (adapted for the specific tech stack):
+When spinup_approach = quick-start, the skill should generate ALL of the following immediately (adapted for the specific tech stack):
 
 ### Files to Generate (Tech-Stack-Specific)
 
@@ -1006,7 +1071,19 @@ After generating all files, provide this summary to the user:
 
 📁 Project: {project_name}
 📦 Tech Stack: {primary technologies}
-🎓 Mode: {Learning Mode or Quick Start Mode}
+🎓 Spinup Approach: {Guided Setup or Quick Start}
+
+---
+
+**Workflow Status: ✅ ALL SKILLS PHASES COMPLETE**
+- ✅ Phase 0: project-brief-writer (Brief and PROJECT-MODE.md)
+- ✅ Phase 1: tech-stack-advisor (Technology decisions)
+- ✅ Phase 2: deployment-advisor (Deployment strategy)
+- ✅ Phase 3: project-spinup (Project foundation) ← Just completed
+
+🎉 **Skills workflow complete! Ready to begin development.**
+
+---
 
 Generated:
 ✅ claude.md - Comprehensive project context for Claude Code
@@ -1019,13 +1096,13 @@ Generated:
 
 Next Steps:
 
-{If Learning Mode:}
-1. Open claude.md and read the "Next Steps (Learning Mode)" section
+{If Guided Setup:}
+1. Open claude.md and read the "Next Steps (Guided Setup)" section
 2. Copy the first prompt and paste it to Claude Code
 3. Follow the guided steps to build out your project incrementally
 4. Ask questions as you go - learning is the goal!
 
-{If Quick Start Mode:}
+{If Quick Start:}
 1. Review the generated code structure
 2. Copy .env.example to .env.local and configure
 3. Run: docker compose up -d
@@ -1052,15 +1129,65 @@ Happy coding! 🚀
 
 When this skill is invoked:
 
-1. **Gather all required inputs** - Don't proceed until you have tech stack, hosting plan, and project details
-2. **Adapt templates to tech stack** - Don't use Next.js templates for a PHP project
-3. **Be comprehensive** - The claude.md file is the primary context for future Claude Code sessions
-4. **Include John's context** - Personal workflow, infrastructure, learning goals
-5. **Learning Mode is default** - Unless user explicitly requests Quick Start
-6. **Explain trade-offs** - Help John understand why choices were made
-7. **Test-friendly** - Include testing setup and examples
-8. **Docker-first** - Always include docker-compose.yml for local dev
-9. **Security-conscious** - .env for secrets, .gitignore to prevent leaks
-10. **Documentation-rich** - Comments, README, claude.md all work together
+1. **Check PROJECT-MODE.md first** - Read it to provide MODE-informed suggestions for spinup approach
+2. **Ask about spinup approach** - Don't assume; present Guided Setup vs Quick Start options
+3. **Gather all required inputs** - Don't proceed until you have tech stack, hosting plan, and project details
+4. **Adapt templates to tech stack** - Don't use Next.js templates for a PHP project
+5. **Be comprehensive** - The claude.md file is the primary context for future Claude Code sessions
+6. **Include John's context** - Personal workflow, infrastructure, learning goals
+7. **Respect user choice** - Guided Setup and Quick Start are equally valid; user knows their familiarity with the stack
+8. **Explain trade-offs** - Help John understand why choices were made
+9. **Test-friendly** - Include testing setup and examples
+10. **Docker-first** - Always include docker-compose.yml for local dev
+11. **Security-conscious** - .env for secrets, .gitignore to prevent leaks
+12. **Documentation-rich** - Comments, README, claude.md all work together
+13. **Show workflow completion** - Emphasize that all skills phases are complete and project is ready for development
 
 The goal is to give John a solid foundation to start learning and building, with Claude Code as his primary development partner.
+
+---
+
+## Version History
+
+### v1.1 (2025-11-12)
+**Skills Workflow Refinement - Phase 5**
+
+Enhancements:
+- **Workflow State Visibility**: Added "Skills Phase 3 of 3" status indicator showing progression through complete skills workflow
+- **Spinup Approach Independence**: Separated spinup approach (Guided/Quick Start) from PROJECT-MODE.md; strategic learning ≠ tactical implementation
+- **MODE-Informed Suggestions**: Phase 0 now reads PROJECT-MODE.md and provides contextual suggestions while allowing user override based on stack familiarity
+- **Decision Framework**: Added comprehensive explanation of when to use Guided Setup vs Quick Start
+- **Workflow Completion**: Updated execution summary to show all skills phases complete and ready for development
+- **Terminology Update**: Changed "Learning Mode" → "Guided Setup" for clarity
+- **Enhanced Instructions**: Updated Claude notes to emphasize PROJECT-MODE.md awareness and user choice respect
+
+Background:
+- Implements Decision Point 8 from Skills Workflow Refinement project
+- Recognizes distinction between strategic learning (advisory skills) and tactical learning (implementation familiarity)
+- Allows LEARNING mode users to use Quick Start if familiar with stack
+- Allows DELIVERY mode users to use Guided Setup if learning new technology
+
+### v1.0 (Initial)
+Original project-spinup skill with comprehensive claude.md generation, Docker configuration, and dual-mode scaffolding.
+
+---
+
+## Further Reading
+
+### Background Documentation
+For context on the design decisions and philosophy behind this skill:
+
+- **lovable-vs-claude-code.md**: Phase 0 meta-skills philosophy, infrastructure-first approach, skills vs implementation workflow distinction
+- **done-vs-next.md**: Confirms Phase 0 meta-skills focus and general-purpose, stack-agnostic skill design
+- **Skills Workflow Refinement Session Context**: Complete decision points and refinement rationale
+
+### Related Skills
+- **project-brief-writer**: Creates PROJECT-MODE.md that informs spinup approach suggestions
+- **tech-stack-advisor**: Provides technology decisions that determine which templates to use
+- **deployment-advisor**: Provides deployment strategy that shapes Docker and infrastructure configuration
+
+### Key Concepts
+- **Strategic Learning vs Tactical Learning**: PROJECT-MODE governs advisory workflow; spinup approach governs implementation familiarity
+- **Guided Setup**: Foundation + step-by-step prompts for incremental learning
+- **Quick Start**: Complete scaffolding for rapid development with familiar stacks
+- **claude.md**: Comprehensive project context file that serves as primary AI assistant reference
