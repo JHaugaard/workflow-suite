@@ -4,7 +4,7 @@ description: Recommend hosting strategy based on chosen tech stack and project n
 allowed-tools: [Read, Grep, Glob, WebSearch, Write]
 ---
 
-# Hosting Advisor Meta-Skill
+# Deployment Advisor Meta-Skill
 
 ## Purpose
 
@@ -292,9 +292,10 @@ COST SCALING (As traffic grows):
 • 100x traffic: ${Z}/month (migration likely needed)
 
 COMPARE TO ALTERNATIVES:
-• Managed PaaS (Vercel/Heroku): ${X}/month (convenience premium)
-• Full cloud (AWS/GCP): ${Y}/month (more features, complexity)
-• Shared hosting: ${Z}/month (cheaper but limited)
+• Cloudflare Pages: $0/month (static/frontend only)
+• Fly.io: ${X}/month (global distribution, managed)
+• VPS: ${Y}/month (full control, existing infrastructure)
+• Shared hosting: ${Z}/month (cheapest, PHP only)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📈 SCALING PATH
@@ -536,339 +537,533 @@ Use this framework when analyzing options:
 
 ### Recommendation Logic
 
-**Choose Existing Hostinger VPS When**:
-- Tech stack runs well in Docker
-- Traffic is low-to-moderate
-- Want to learn server management
-- Budget-conscious
-- Can leverage existing infrastructure
+**Choose Localhost When**:
+- Personal utility app (not for sharing)
+- Learning and experimentation
+- Testing before public deployment
+- No distribution requirements
 
-Example: Next.js + Supabase, PHP + MySQL, FastAPI + PostgreSQL
+Example: Local development tools, learning projects, prototypes
 
 **Choose Hostinger Shared Hosting When**:
-- Simple PHP application
+- Simple PHP application only
 - Very low traffic
 - Minimal maintenance desired
 - No Docker/container needs
-- Lowest cost priority
+- Absolute lowest cost priority
 
-Example: Simple PHP blog, WordPress site
+Example: Simple PHP blog, WordPress site, basic company website
 
-**Choose PaaS (Vercel, Netlify, etc.) When**:
-- Want zero-config deployment
-- Willing to pay convenience premium
-- Need global CDN out-of-box
-- Serverless functions sufficient
-- Development speed is priority
+**Choose Cloudflare Pages When**:
+- Frontend-only application
+- Static or JAMstack architecture
+- Want zero cost
+- Need global CDN/performance
+- No persistent backend state needed
+- Want instant deployment
 
-Example: Next.js on Vercel, static sites on Netlify
+Example: React SPA, portfolio site, documentation, landing pages
 
-**Choose Managed Database When**:
-- Database is mission-critical
-- Want automated backups/scaling
-- Outgrew VPS database capacity
-- Can afford $15-50/month
-- Don't want to manage database
+**Choose Fly.io When**:
+- Full-stack app with database
+- Need global distribution
+- Want managed infrastructure
+- Comfortable with Docker
+- Can budget $20-50/month
+- Don't want to manage servers
+- Need auto-scaling
 
-Example: Supabase Cloud, PlanetScale, Neon
+Example: Multi-region apps, global APIs, production apps needing reliability
 
-**Choose Cloud Provider (AWS, GCP, Azure) When**:
-- Need specific cloud services
-- Scaling beyond VPS capabilities
-- Enterprise-level reliability required
-- Budget for complexity and cost
-- Team has cloud expertise
+**Choose VPS with Docker When**:
+- Tech stack runs well in Docker
+- Traffic is low-to-moderate (<10k daily users)
+- Want to learn DevOps/server management
+- Budget-conscious (marginal cost $0)
+- Can leverage existing infrastructure
+- Need maximum control
+- Want to self-host tools (Supabase, n8n, Ollama)
+- Willing to manage infrastructure
 
-Example: High-traffic production apps, complex architectures
+Example: Next.js + self-hosted Supabase, FastAPI + PostgreSQL, any containerized app
 
 ## Hosting Options Reference
 
-### Self-Hosted on Hostinger VPS
+This skill evaluates **five deployment options** relevant to small personal projects:
 
-**Best For**: Most full-stack applications, learning projects, budget-conscious
-**Tech Stacks**: Next.js, PHP, Python, Node.js, basically anything with Docker
-**Cost**: $40-60/month VPS (John already has this)
+1. **Localhost** - Local development, utility apps
+2. **Hostinger Shared Hosting** - Traditional web hosting
+3. **Cloudflare Pages** - Edge-deployed static/JAMstack apps
+4. **Fly.io** - Containerized global deployment with databases
+5. **VPS with Docker Containers** (Hostinger) - Maximum control, self-managed
+
+**Key Principle**: Code is portable. Deployment target is a separate decision. Build once, deploy multiple ways.
+
+---
+
+### 1. Localhost
+
+**What it is**: Running application on personal computer, not publicly accessible.
+
+**Best For**:
+- Learning and experimentation
+- Simple utility apps for personal use only
+- Testing before committing to public deployment
+- Apps with no distributed/global requirements
+
+**Cost**: $0
+
+**Tech Stacks**: Any (full freedom)
+
+**Pros**:
+- No infrastructure to manage
+- Immediate feedback loop
+- Full control over environment
+- Perfect for breaking things and learning
+- Can run any database locally
+
+**Cons**:
+- Can't access from outside your network
+- Not suitable for production or shared use
+- Dependent on your computer being on
+- No global distribution
+- No uptime guarantees
+
+**Databases & Storage**:
+- Run any database locally (PostgreSQL, MongoDB, SQLite)
+- File system for storage
+- No backup/redundancy concerns
+
+**When to Recommend**:
+- Personal utility app (local-only)
+- Learning and experimentation phase
+- Testing before public deployment
+- No sharing/distribution requirements
+
+**Migration Path**: Code transfers directly to any other option (Pages, Fly.io, VPS)
+
+---
+
+### 2. Hostinger Shared Hosting
+
+**What it is**: Traditional web hosting with cPanel interface, PHP/MySQL stack, FTP/SFTP file management.
+
+**Best For**:
+- Simple PHP-based websites
+- WordPress sites
+- Static websites
+- Projects with minimal backend requirements
+- Low-cost baseline option
+
+**Cost**: $3-5/month
+
+**Tech Stacks**: PHP + MySQL only (no Node.js, Python, Docker)
+
+**Pros**:
+- Very cheap
+- Managed infrastructure (Hostinger handles servers)
+- Click-based management via cPanel
+- Easy to deploy (FTP, cPanel)
+- Pre-installed PHP, MySQL
+- Minimal maintenance
+
+**Cons**:
+- Limited to PHP + MySQL
+- No Docker support
+- No custom runtime languages
+- Shared resources (performance varies)
+- No Docker or custom services
+- Limited control
+- Manual deployment only
+- Single region only
+- Limited for development learning (too abstracted)
+
+**Databases & Storage**:
+- MySQL included
+- Limited storage (depends on plan)
+- File system via FTP
+- Limited to MySQL (can't run PostgreSQL, MongoDB, etc.)
+
+**Self-Hosted Infrastructure Compatibility**:
+- ❌ Can't run Docker containers
+- ❌ Can't self-host Supabase, n8n, Ollama
+- ❌ Can't run custom services
+
+**When to Recommend**:
+- Simple PHP-only application
+- WordPress blogs
+- Simple company websites
+- Static content sites
+- Personal project, very low traffic
+- Absolute lowest cost needed
+- No backend complexity
+
+**Note**: Generally avoid for modern learning projects - too limited.
+
+---
+
+### 3. Cloudflare Pages
+
+**What it is**: Serverless platform for static sites and JAMstack applications deployed to Cloudflare's global edge network.
+
+**Best For**:
+- Static websites
+- Single-page applications (React, Vue, Svelte)
+- JAMstack applications
+- Frontend-only projects
+- Sites with simple serverless backend needs
+
+**Cost**: $0 (genuinely free)
+- Unlimited bandwidth
+- Unlimited requests
+- Unlimited builds
+- No hidden costs
+
+**Tech Stacks**: Any static generator, React, Vue, Next.js (static), Svelte, Astro
+
+**Pros**:
+- Zero-config deployment (git push to deploy)
+- Zero-configuration for most frameworks
+- Automatic framework detection
+- Git-connected auto-deployment
+- Automatic HTTPS
+- Global CDN via Cloudflare edge network (blazing fast)
+- Instant preview URLs for PR branches
+- Build environment included
+- Very generous free tier
+- Integrated with Cloudflare DNS/CDN (John already uses!)
+
+**Cons**:
+- Static/frontend only (no persistent backend state)
+- Build output must be static files
+- Not suitable for persistent databases
+- Limited to 100MB project size
+- Pages Functions have 10MB code limit
+- Learning curve for Pages Functions
+- Not for traditional backends
+- Limited execution time
+- Cold start: ~250ms for first request
+- Not ideal for real-time applications
+
+**Databases & Storage**:
+- Not suitable for persistent databases (stateless only)
+- Can call external databases/APIs
+- R2 object storage available ($0.015/GB)
+- Can integrate with external database services
+
+**Self-Hosted Infrastructure Compatibility**:
+- ✅ Can call self-hosted APIs (Supabase, n8n via HTTP)
+- ✅ Can fetch from self-hosted services
+- ✅ Pages Functions can make HTTP calls to VPS
+- ⚠️ Not ideal for heavy integration (latency across calls)
+
+**Vendor Lock-In**: LOW
+- Code is vanilla HTML/CSS/JavaScript
+- Pages Functions are simplified (can port to other platforms)
+- No proprietary APIs required
+- Can mirror same project on other platforms
+- Exit cost: Minimal (copy files)
+
+**When to Recommend**:
+- Frontend-only app (static/JAMstack)
+- Need global performance
+- Static site with edge logic
+- Budget constraints (great free tier)
+- Want zero cost
+- Prioritize low vendor lock-in
+- Already using Cloudflare DNS
+
+**Decision Checklist**:
+- Is your app primarily frontend? ✅
+- Does it need databases? ❌ (use external service instead)
+- Is it static or JAMstack? ✅
+- Do you want zero cost? ✅
+- Do you prioritize low vendor lock-in? ✅
+- Do you need global distribution? ✅
+
+---
+
+### 4. Fly.io
+
+**What it is**: Platform for deploying containerized applications globally across 35 regions with managed PostgreSQL databases.
+
+**Best For**:
+- Full-stack applications with backends
+- Apps requiring real databases
+- Global distribution with database replication
+- Learning containerized deployment
+- Applications that don't fit serverless constraints
+- Backends paired with Cloudflare Pages frontend
+
+**Cost**: $20-50/month for multiple small projects
+- Shared CPU machine: $2.40/month
+- PostgreSQL database: Free-$3/month (small)
+- Volume storage: $0.15/GB/month
+- Data egress: $0.02-0.12/GB
+- Example 5-project setup: ~$30-40/month total
+
+**Tech Stacks**: Any (Docker-based) - Node.js, Python, Go, Ruby, PHP, etc.
+
+**Pros**:
+- Docker-based (use existing container knowledge)
+- 35 global regions (automatic regional distribution)
+- Auto-scaling based on traffic
+- Managed PostgreSQL with backups
+- CLI-first deployment (`fly deploy`)
+- Private networking between apps
+- Free WireGuard VPN included
+- Auto-generated Dockerfiles for popular frameworks
+- Support many languages/frameworks
+- Easy deployment
+
+**Cons**:
+- Requires Docker knowledge (container concepts)
+- Pay-per-use pricing (less predictable)
+- Data egress charges apply
+- CLI-first workflow (not dashboard-heavy)
+- Requires credit card on file
+- Not ideal for extremely heavy compute (use VPS for that)
+
+**Databases & Storage**:
+- ✅ Full PostgreSQL support (connection pooling works)
+- ✅ Volumes for persistent storage ($0.15/GB/month)
+- ✅ Can integrate Redis/Upstash
+- ✅ Managed backups included
+
+**Self-Hosted Infrastructure Compatibility**:
+- ✅ Can call self-hosted Supabase API
+- ✅ Can trigger n8n workflows via HTTP
+- ✅ Can call Ollama API on VPS for AI compute
+- ✅ Can use self-hosted Redis
+- Recommended pattern: Fly for frontend/APIs, VPS for heavy compute
+
+**Vendor Lock-In**: LOW
+- Standard Docker containers (portable anywhere)
+- PostgreSQL is industry-standard
+- Can run same Docker image locally or on other platforms
+- Can migrate to VPS, Kubernetes, or other Docker hosts
+- Exit cost: Minimal (containers work everywhere)
+
+**When to Recommend**:
+- Full-stack app needing database
+- Backend-heavy applications
+- Want PaaS but value portability
+- Need global distribution
+- Comfortable with Docker
+- Need database included
+- Want connection pooling to work
+- Budget $20-50/month acceptable
+
+**Decision Checklist**:
+- Does your app need a database? ✅
+- Is it backend-heavy? ✅
+- Do you need global distribution? ✅
+- Are you comfortable with Docker? ✅
+- Do you prioritize low vendor lock-in? ✅
+- Do you want connection pooling to work? ✅
+
+**Learning Value**: Bridges VPS knowledge with global infrastructure (Fly Machines are containers, just like your Docker approach).
+
+---
+
+### 5. VPS with Docker Containers (Hostinger)
+
+**What it is**: Virtual Private Server running Docker containers for complete control over infrastructure, databases, and deployment.
+
+**Best For**:
+- Full-stack applications with custom requirements
+- Self-hosted infrastructure (Supabase, n8n, Ollama)
+- Learning DevOps and infrastructure management
+- Applications not fitting serverless constraints
+- Maximum control and flexibility
+- Long-term cost optimization at scale
+
+**Cost**: $40-60/month VPS (John already has this - marginal cost $0)
+- Hostinger VPS: $40-60/month
+- Fixed monthly cost (predictable)
+- Can run unlimited services on one VPS
+- Additional costs: Domain, storage, bandwidth as needed
+
+**Tech Stacks**: Any (Next.js, PHP, Python, Node.js, basically anything with Docker)
+
 **Pros**:
 - Full control over environment
 - Use existing infrastructure (Supabase, PostgreSQL, etc.)
 - Predictable costs
-- Learning opportunity
+- Learning opportunity (maximum)
 - Docker-based for consistency
+- Full Linux environment (complete control)
+- Docker/Docker Compose for containerization
+- SSH key-based authentication
+- Custom firewall rules
+- Run any database
+- Connection pooling works natively
+- Can self-host Supabase, n8n, Ollama, Redis
+- Unlimited customization
+- Always-on compute
 
 **Cons**:
 - More maintenance responsibility
 - Need to manage security updates
 - Single point of failure (can add redundancy)
 - Need to configure SSL, domains, etc.
+- Requires DevOps knowledge for setup/maintenance
+- No automatic scaling
+- Responsible for security updates and patching
+- More points of failure than managed platforms
+- Deployment slower (build → push → SSH → pull → restart)
+- Single geographic location (latency for distant users)
+- Manual backups/disaster recovery (can automate)
+- Learning curve is steep (worth it long-term)
+
+**Databases & Storage**:
+- ✅ Run any database (PostgreSQL, MySQL, MongoDB, etc.)
+- ✅ Connection pooling works natively
+- ✅ Full storage control
+- ✅ Can self-host Supabase, n8n, Ollama
+- ✅ Can run Redis, caching layers
+- ✅ Unlimited customization
+
+**Self-Hosted Infrastructure Compatibility**:
+- ✅ Perfect for running Supabase Docker containers
+- ✅ Perfect for running n8n
+- ✅ Perfect for running Ollama with GPU access
+- ✅ Perfect for running Redis
+- ✅ Can run multiple isolated services simultaneously
+- ✅ Full networking control
+
+**Vendor Lock-In**: NONE
+- Standard Docker containers (portable everywhere)
+- Standard Linux commands
+- Can migrate to any cloud provider or self-host
+- Can clone/backup everything
+- Exit cost: Zero (move containers and data anywhere)
 
 **When to Recommend**:
 - John already has VPS with capacity
 - Tech stack runs well in Docker
 - Traffic <10k daily users
-- Learning is a goal
-- Budget priority
+- Learning is a goal (maximum learning value)
+- Budget priority (marginal cost $0)
+- Need maximum control
+- Can manage own infrastructure
+- Need to self-host tools
+- Prioritize portability
+- Want to avoid vendor lock-in
+- Learning DevOps
 
-### Hostinger Shared Hosting
+**Decision Checklist**:
+- Do you need maximum control? ✅
+- Can you manage your own infrastructure? ✅
+- Do you need to self-host tools? ✅
+- Do you prioritize portability? ✅
+- Do you want to avoid vendor lock-in? ✅
+- Are you learning DevOps? ✅
+- Do you have time for infrastructure management? ⚠️
 
-**Best For**: Simple PHP applications, very low traffic
-**Tech Stacks**: PHP + MySQL only (no Node.js, Python, Docker)
-**Cost**: $2-10/month
-**Pros**:
-- Very cheap
-- Easy to deploy (FTP, cPanel)
-- Minimal maintenance
-- Good for PHP/WordPress
-
-**Cons**:
-- Limited to PHP + MySQL
-- Shared resources (performance varies)
-- No Docker or custom services
-- Limited control
-
-**When to Recommend**:
-- Simple PHP-only application
-- Personal project, very low traffic
-- Absolute lowest cost needed
-- No backend complexity
-
-### Vercel (Next.js Focus)
-
-**Best For**: Next.js applications with serverless backend
-**Tech Stacks**: Next.js, React, static sites
-**Cost**: $0-20/month (generous free tier)
-**Pros**:
-- Zero-config deployment (git push to deploy)
-- Global CDN included
-- Serverless functions
-- Preview deployments
-- Excellent DX
-
-**Cons**:
-- Vendor lock-in (some Next.js features)
-- Costs scale with traffic
-- Limited to JavaScript/TypeScript
-- No persistent servers (must use serverless)
-
-**When to Recommend**:
-- Using Next.js (best-in-class support)
-- Want fastest deployment
-- Serverless architecture acceptable
-- Willing to pay for convenience
-- Budget allows $0-50/month
-
-### Netlify (Static Sites + Functions)
-
-**Best For**: Static sites, JAMstack apps
-**Tech Stacks**: Any static generator, React, Vue, serverless functions
-**Cost**: $0-20/month (generous free tier)
-**Pros**:
-- Great for static sites
-- Global CDN
-- Serverless functions
-- Forms and identity built-in
-- Easy deployment
-
-**Cons**:
-- Primarily for static/JAMstack
-- Function execution limits on free tier
-- Not great for traditional backends
-- Costs increase with traffic
-
-**When to Recommend**:
-- Static or mostly-static site
-- JAMstack architecture
-- Serverless functions sufficient
-- Want easy deployment
-
-### Railway / Render (PaaS Options)
-
-**Best For**: Full-stack apps with databases, any language
-**Tech Stacks**: Node.js, Python, Go, Ruby, etc. + PostgreSQL/MySQL
-**Cost**: $5-50/month (usage-based)
-**Pros**:
-- Support many languages/frameworks
-- Managed databases included
-- Easy deployment (git push)
-- Docker support
-- Reasonable pricing
-
-**Cons**:
-- Less mature than Heroku/Vercel
-- Pricing can be unpredictable
-- Smaller community
-- May have growing pains
-
-**When to Recommend**:
-- Want PaaS but not Heroku prices
-- Need database included
-- Tech stack needs beyond Vercel/Netlify
-- Comfortable with newer platforms
-- Budget $20-100/month
-
-### DigitalOcean App Platform
-
-**Best For**: Full-stack apps, similar to Railway/Render
-**Tech Stacks**: Node.js, Python, PHP, Go, Ruby, etc.
-**Cost**: $5-50/month
-**Pros**:
-- DigitalOcean reliability
-- Managed databases available
-- Simpler than raw VPS
-- Static sites free tier
-
-**Cons**:
-- More expensive than raw DO Droplet
-- Less flexible than VPS
-- Pricing per service
-
-**When to Recommend**:
-- Want managed platform
-- Like DigitalOcean ecosystem
-- Need database + app hosting
-- $25-100/month budget
-
-### Cloudflare Pages + Workers
-
-**Best For**: Static sites, edge computing, global performance
-**Tech Stacks**: Static sites, serverless edge functions
-**Cost**: $0-20/month (generous free tier)
-**Pros**:
-- Global edge network (blazing fast)
-- Very generous free tier
-- Workers for server logic
-- Integrated with Cloudflare DNS/CDN
-
-**Cons**:
-- Learning curve for Workers
-- Not for traditional backends
-- Limited execution time
-- Worker storage is KV (not SQL)
-
-**When to Recommend**:
-- Need global performance
-- Static site with edge logic
-- Budget constraints (great free tier)
-- Already using Cloudflare DNS (John is!)
-
-### Supabase Cloud (Managed Backend)
-
-**Best For**: Apps using Supabase, don't want to self-host
-**Tech Stacks**: Any frontend + Supabase backend
-**Cost**: $0-25/month (free tier, then $25/month Pro)
-**Pros**:
-- Managed Supabase (no self-hosting hassle)
-- Database, auth, storage, realtime included
-- Generous free tier
-- Automatic backups and scaling
-
-**Cons**:
-- John already self-hosts Supabase (paying for redundant)
-- Free tier limitations (500MB database, 1GB storage)
-- $25/month jumps quickly to $100+ with growth
-- Some vendor lock-in
-
-**When to Recommend**:
-- Don't want to self-host database
-- Need auth + database + storage quickly
-- Project may need managed services
-- Can afford $25/month+
+**Learning Value**: Best for understanding full-stack development, containerization, DevOps workflows, and infrastructure management
 
 ## Common Deployment Patterns
 
-### Pattern 1: Next.js + Supabase (Self-Hosted)
+These patterns demonstrate how to combine the 5 deployment options with different tech stacks:
 
-**Hosting**: Hostinger VPS (Docker)
-**Database**: Self-hosted Supabase on same VPS (John has this)
-**File Storage**: Supabase Storage or Backblaze B2
-**Deployment**: Git push → SSH to VPS → docker compose up
-**Cost**: $0/month (uses existing VPS)
-**Best For**: Learning, full control, leveraging existing infrastructure
+### Pattern 1: Static/JAMstack Site (Frontend Only)
 
-### Pattern 2: Next.js + Supabase (Hybrid)
-
-**Hosting**: Vercel (frontend)
-**Database**: Self-hosted Supabase on Hostinger VPS
-**File Storage**: Backblaze B2
-**Deployment**: Git push to Vercel (auto-deploy)
-**Cost**: $0-20/month (Vercel free tier + existing VPS)
-**Best For**: Easy frontend deployment, keep backend control
-
-### Pattern 3: Next.js + Supabase (Fully Managed)
-
-**Hosting**: Vercel (frontend)
-**Database**: Supabase Cloud (managed)
-**File Storage**: Supabase Storage
+**Deployment Option**: Cloudflare Pages
+**Tech Stack**: React, Vue, Svelte, Astro, Next.js (static)
+**Database**: External API or none
+**File Storage**: R2 or external service
 **Deployment**: Git push (auto-deploy)
-**Cost**: $0-45/month ($0-20 Vercel + $0-25 Supabase)
-**Best For**: Fastest setup, minimal maintenance, willing to pay
+**Cost**: $0/month
+**Best For**: Frontend-only apps, portfolios, documentation sites, landing pages
 
-### Pattern 4: PHP + MySQL (Shared Hosting)
+### Pattern 2: Full-Stack with Database (Self-Hosted)
 
-**Hosting**: Hostinger Shared
-**Database**: MySQL on same host
+**Deployment Option**: VPS with Docker Containers
+**Tech Stack**: Next.js, FastAPI, PHP, Node.js (any)
+**Database**: Self-hosted PostgreSQL/MySQL on same VPS
+**File Storage**: Local VPS or Backblaze B2
+**Deployment**: Git push → SSH → docker compose up
+**Cost**: $0/month marginal (uses existing VPS)
+**Best For**: Learning DevOps, full control, leveraging existing infrastructure
+
+### Pattern 3: Full-Stack with Global Distribution
+
+**Deployment Option**: Fly.io
+**Tech Stack**: Next.js, FastAPI, Node.js, Go (any)
+**Database**: Fly.io managed PostgreSQL
+**File Storage**: Fly.io volumes or Backblaze B2
+**Deployment**: `fly deploy` (CLI)
+**Cost**: $20-50/month
+**Best For**: Global performance, auto-scaling, managed infrastructure
+
+### Pattern 4: Hybrid (Frontend + Self-Hosted Backend)
+
+**Frontend**: Cloudflare Pages (global edge)
+**Backend API**: VPS with Docker (self-hosted)
+**Database**: Self-hosted PostgreSQL on VPS
+**File Storage**: Backblaze B2
+**Deployment**: Pages auto-deploy + VPS manual
+**Cost**: $0/month marginal (uses existing VPS)
+**Best For**: Best of both worlds - fast frontend, controlled backend
+
+### Pattern 5: Simple PHP/WordPress Site
+
+**Deployment Option**: Hostinger Shared Hosting
+**Tech Stack**: PHP + MySQL
+**Database**: MySQL on shared host
 **File Storage**: Local storage
 **Deployment**: FTP or Git
-**Cost**: $2-10/month
-**Best For**: Simple PHP apps, lowest cost, minimal traffic
+**Cost**: $3-5/month
+**Best For**: Simple PHP apps, WordPress, lowest cost, minimal traffic
 
-### Pattern 5: PHP + MySQL (VPS)
+### Pattern 6: Local Development/Personal Utility
 
-**Hosting**: Hostinger VPS (Docker or native)
-**Database**: MySQL on same VPS
-**File Storage**: Local or Backblaze B2
-**Deployment**: Git push → SSH → deploy script
-**Cost**: $0/month (uses existing VPS)
-**Best For**: Learning PHP, full control, Docker practice
-
-### Pattern 6: FastAPI + PostgreSQL (VPS)
-
-**Hosting**: Hostinger VPS (Docker)
-**Database**: PostgreSQL on same VPS (John has this)
-**File Storage**: Backblaze B2
-**Deployment**: Git push → SSH → docker compose up
-**Cost**: $0/month (uses existing VPS)
-**Best For**: API-first, Python projects, data-heavy apps
-
-### Pattern 7: Static Site + Serverless Functions
-
-**Hosting**: Cloudflare Pages or Netlify
-**Backend**: Serverless functions (Cloudflare Workers / Netlify Functions)
-**Database**: Supabase or PlanetScale (serverless-friendly)
-**File Storage**: Backblaze B2 or provider storage
-**Deployment**: Git push (auto-deploy)
-**Cost**: $0-25/month
-**Best For**: JAMstack, API calls, simple backend logic
+**Deployment Option**: Localhost
+**Tech Stack**: Any
+**Database**: Any (local PostgreSQL, SQLite, etc.)
+**File Storage**: Local filesystem
+**Deployment**: N/A (local only)
+**Cost**: $0
+**Best For**: Learning, experimentation, personal utilities, testing
 
 ## Red Flags & Warnings
 
 ### When to Push Back
 
-**User wants expensive managed services for learning project**:
+**User wants expensive cloud services for learning project**:
 ```
-CONCERN: Paying $100/month for AWS when VPS would work
-INSTEAD: Recommend self-hosted on existing VPS
+CONCERN: Paying $100+/month for AWS/GCP when VPS or Fly.io would work
+INSTEAD: Recommend VPS (existing infrastructure) or Fly.io ($20-50/mo)
 REASON: Learning goal + budget consciousness + has infrastructure
 ```
 
-**User wants self-hosted for production SaaS with uptime needs**:
+**User wants self-hosted VPS for production SaaS with uptime needs**:
 ```
-CONCERN: Single VPS for business-critical app
-INSTEAD: Recommend managed database + redundancy at minimum
-REASON: Downtime = lost revenue, needs reliability
-```
-
-**User wants complex Kubernetes setup for simple CRUD app**:
-```
-CONCERN: Massive overkill for project scale
-INSTEAD: Recommend simple Docker Compose on VPS
-REASON: Maintenance burden, learning curve not justified
+CONCERN: Single VPS for business-critical app with paying customers
+INSTEAD: Recommend Fly.io with redundancy or managed cloud provider
+REASON: Downtime = lost revenue, needs reliability and auto-scaling
 ```
 
-**User wants shared hosting for Next.js app**:
+**User wants complex infrastructure for simple static site**:
+```
+CONCERN: Setting up VPS/Docker for a basic portfolio site
+INSTEAD: Recommend Cloudflare Pages
+REASON: Zero cost, zero maintenance, instant global deployment
+```
+
+**User wants shared hosting for Next.js/Node.js app**:
 ```
 CONCERN: Shared hosting doesn't support Node.js
-INSTEAD: Recommend VPS or Vercel
+INSTEAD: Recommend Cloudflare Pages (static) or VPS/Fly.io (full-stack)
 REASON: Tech stack incompatibility
+```
+
+**User wants Fly.io but has no budget**:
+```
+CONCERN: $20-50/month cost when VPS already exists
+INSTEAD: Recommend VPS with Docker (marginal cost $0)
+REASON: Budget constraints, learning goals still met with VPS
 ```
 
 ## Teaching Moments
@@ -876,16 +1071,19 @@ REASON: Tech stack incompatibility
 Use recommendations as opportunities to teach:
 
 ### Explain Deployment Trade-Offs
-"PaaS like Vercel gives you push-to-deploy convenience, but you pay a premium and give up some control. VPS gives you full control and better pricing, but you manage everything..."
+"Cloudflare Pages gives you zero-cost global deployment but only for static/frontend apps. Fly.io adds backend capabilities with auto-scaling for $20-50/month. VPS gives you full control for the cost you're already paying, but you manage everything..."
 
 ### Compare Managed vs Self-Hosted
-"Managed database ($25/month) handles backups, scaling, and maintenance for you. Self-hosted ($0 on your VPS) requires you to manage it, but you learn those skills and save money..."
+"Fly.io managed PostgreSQL ($3/month) handles backups, scaling, and maintenance for you. Self-hosted on VPS ($0 marginal cost) requires you to manage it, but you learn DevOps skills and leverage infrastructure you already have..."
 
 ### Connect to Project Lifecycle
-"Start on VPS for learning and low traffic. When you hit 10k users and performance matters, migrate database to managed service. At 100k users, consider multi-region cloud setup..."
+"Start with Cloudflare Pages for frontend-only apps (free). When you need a database, add VPS backend or use Fly.io. When you hit 10k+ users globally, consider Fly.io's multi-region deployment. VPS works great until you need global scale..."
 
 ### Reference Real-World Patterns
-"Most startups begin on VPS or PaaS, scale with managed databases, then migrate to cloud providers when reaching scale. You're following that natural progression..."
+"Many developers start with static sites on Pages, add backends with Fly.io or VPS, then scale strategically. For learning projects, VPS teaches you the fundamentals. For production at scale, managed platforms handle complexity..."
+
+### Highlight Learning Paths
+"Localhost → Cloudflare Pages teaches frontend. Pages → VPS teaches full-stack + DevOps. VPS → Fly.io teaches managed infrastructure. Each step builds on previous knowledge..."
 
 ---
 
@@ -944,6 +1142,17 @@ This helps you understand your progress and what comes next.
 
 ## Version History
 
+### v1.2 (2025-11-12)
+**Deployment Options Alignment**
+
+Corrected deployment options to align with canonical 5 options:
+- Removed non-standard options (Vercel, Netlify, Railway, Render, DigitalOcean, Supabase Cloud)
+- Aligned with deployment-recap.md: Localhost, Shared Hosting, Cloudflare Pages, Fly.io, VPS
+- Updated all deployment patterns to reference only the 5 canonical options
+- Updated recommendation logic and decision framework
+- Updated teaching moments and examples
+- Corrected "Hosting Advisor" heading to "Deployment Advisor"
+
 ### v1.1 (2025-11-11)
 **Skills Workflow Refinement - Phase 4**
 
@@ -1000,39 +1209,48 @@ The goal is to provide John with a clear, actionable hosting plan that fits his 
 
 ## Example Invocations
 
-### Example 1: From tech-stack-advisor output
+### Example 1: Static site deployment
 ```
-User: "Use deployment-advisor skill for the Next.js + Supabase stack we just decided on"
+User: "Use deployment-advisor skill for my React portfolio site"
 
-→ Skill analyzes Next.js + Supabase requirements, recommends self-hosted on
-existing VPS since John has Supabase already, provides Docker deployment
-workflow, explains costs ($0 uses existing), shows scaling path.
-```
-
-### Example 2: Exploring alternatives
-```
-User: "I'm building a FastAPI project with PostgreSQL. Should I self-host or
-use a managed service? Traffic will be moderate (500-1000 daily users)."
-
-→ Skill recommends self-hosted on VPS (has PostgreSQL, moderate traffic fits),
-provides deployment workflow, but also explains when managed database makes
-sense (if traffic 10x, if mission-critical, if want auto-scaling).
+→ Skill analyzes static site requirements, recommends Cloudflare Pages
+(free, global CDN, instant deployment), provides git-based deployment workflow,
+explains costs ($0), shows how to add Pages Functions if needed later.
 ```
 
-### Example 3: Comparing options
+### Example 2: Full-stack with database
 ```
-User: "For my Next.js app, compare hosting on Vercel vs my VPS"
+User: "I'm building a Next.js + Supabase app. Should I self-host or use managed services?"
+
+→ Skill recommends VPS with Docker (has Supabase already, marginal cost $0),
+provides deployment workflow, but also presents Fly.io alternative if global
+distribution becomes important ($20-50/mo, auto-scaling, managed).
+```
+
+### Example 3: Comparing deployment options
+```
+User: "For my FastAPI + PostgreSQL app, compare VPS vs Fly.io deployment"
 
 → Skill compares:
-- Vercel: Easy deployment, $0-20/month, limited backend, fast global CDN
-- VPS: Full control, $0/month (existing), Docker workflow, more maintenance
-- Recommends based on priorities (learning → VPS, speed → Vercel)
+- VPS: Full control, $0/month marginal, self-hosted PostgreSQL, single region, requires DevOps knowledge
+- Fly.io: Managed PostgreSQL, $20-50/month, 35 regions, auto-scaling, less maintenance
+- Recommends based on priorities (learning + budget → VPS, global scale → Fly.io)
+```
+
+### Example 4: Simple PHP site
+```
+User: "Should I use shared hosting or VPS for a simple WordPress blog?"
+
+→ Skill recommends Hostinger Shared Hosting ($3-5/mo, easiest for WordPress,
+cPanel management), explains VPS would be overkill for this use case, shows
+migration path if needs grow beyond shared hosting capabilities.
 ```
 
 ---
 
-**Skill Version**: 1.0
+**Skill Version**: 1.2
 **Created**: 2025-11-04
+**Updated**: 2025-11-12
 **For**: John's hosting decisions
 **Use After**: tech-stack-advisor skill
 **Use Before**: project-spinup skill
