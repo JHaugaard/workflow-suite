@@ -944,16 +944,22 @@ This helps you understand your progress and what comes next.
 
 ## Version History
 
-**v1.1** (2025-11-11) - Learning-Focused Refinements
+### v1.1 (2025-11-11)
+**Skills Workflow Refinement - Phase 4**
+
+Key enhancements:
 - Added allowed-tools guardrails for advisory-only mode
 - Implemented 3-level checkpoint system (LEARNING/BALANCED/DELIVERY)
 - Integrated PROJECT-MODE.md awareness
 - Added self-hosted infrastructure evaluation framework
-- Added workflow state visibility
+- Added workflow state visibility showing Skills Phase 2 of 3
 - Enhanced infrastructure context integration
 
-**v1.0** (2025-11-04) - Initial Release
-- Core hosting recommendation framework
+### v1.0 (2025-11-04)
+**Initial Release**
+
+Core functionality:
+- Hosting recommendation framework
 - Multiple deployment patterns
 - Self-hosted VPS focus
 
@@ -961,11 +967,19 @@ This helps you understand your progress and what comes next.
 
 ## Further Reading
 
-For deeper context on the design decisions in this skill, see:
-- **deployment-recap.md:** Five deployment options framework and decision matrix
-- **INFRASTRUCTURE_REPO_README.md:** Self-hosted infrastructure details and setup
-- **lovable-vs-claude-code.md:** Strategic decision-making in project development
-- **after-action-report.md:** Context on learning vs delivery trade-offs
+### Background Documentation
+- **deployment-recap.md** - Five deployment options framework and decision matrix
+- **INFRASTRUCTURE_REPO_README.md** - Self-hosted infrastructure details and setup
+- **lovable-vs-claude-code.md** - Strategic decision-making and Phase 0 meta-skills philosophy
+- **after-action-report.md** - Learning vs delivery trade-offs and workflow design
+
+### Related Skills
+- **project-brief-writer** - Creates PROJECT-MODE.md that determines checkpoint strictness (Phase 0)
+- **tech-stack-advisor** - Provides tech stack decisions that inform hosting options (prerequisite)
+- **project-spinup** - Scaffolds project with deployment configuration (next step)
+
+### Workflow Integration
+This is Phase 2 of 3 in the Skills workflow. Reads PROJECT-MODE.md to determine checkpoint level and provides hosting recommendations based on chosen tech stack. Evaluates self-hosted infrastructure alongside managed alternatives.
 
 ---
 

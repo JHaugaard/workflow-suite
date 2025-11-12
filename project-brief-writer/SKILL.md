@@ -604,42 +604,19 @@ For now, keep it simple and focused on software/app projects.
 ## Version History
 
 ### v1.1 (2025-01-11)
-**Major Enhancements (Phase 2 Refinements)**
+**Skills Workflow Refinement - Phase 2**
 
-**What's New:**
-- **PROJECT-MODE.md Auto-Creation** (HIGH PRIORITY)
-  - Mandatory mode selection at skill start (LEARNING/DELIVERY/BALANCED)
-  - Auto-generates PROJECT-MODE.md file with workflow commitments
-  - Anti-bypass protections documented
-  - Subsequent skills will use this to determine checkpoint strictness
-
-- **Workflow State Visibility** (MEDIUM PRIORITY)
-  - Added "Phase 0: Project Brief" status indicator at completion
-  - Clear visualization of next steps (3-phase Skills workflow)
-  - MODE-aware guidance for next skill
-  - Progress tracking throughout workflow
-
-**Why These Improvements Matter:**
-- Addresses the "Over-Specification Problem" from SmugMug project
-- Forces upfront declaration of learning intent
-- Enables other skills to enforce appropriate checkpoint levels
-- Prevents workflow bypass with detailed briefs
-- Maintains learning opportunities even with experienced users
-
-**Integration Notes:**
-- PROJECT-MODE.md must be created before brief collection
-- Other skills (tech-stack-advisor, deployment-advisor, project-spinup) will reference this file
-- Mode can be changed by user if workflow needs adjustment
-
-**Design Rationale:**
-This skill now serves as the gateway to the entire Skills workflow, establishing the learning context that shapes all subsequent decision-making and checkpoints. By declaring mode upfront, we preserve learning opportunities while respecting different user needs (learning vs delivery vs balanced).
-
----
+Key enhancements:
+- Added PROJECT-MODE.md auto-creation with LEARNING/DELIVERY/BALANCED mode selection
+- Implemented workflow state visibility showing 3-phase Skills progression
+- Added MODE-aware guidance for subsequent skills
+- Documented anti-bypass protections and checkpoint integration
+- Addresses Over-Specification Problem from SmugMug after-action report
 
 ### v1.0 (2025-01-08)
-**Initial Release (MVP)**
+**Initial Release**
 
-**Features:**
+Core functionality:
 - Problem-focused brief template
 - Over-specification detection
 - Tech thought quarantine section
@@ -647,21 +624,22 @@ This skill now serves as the gateway to the entire Skills workflow, establishing
 - Polished brief generation
 - Next-step workflow guidance
 
-**Purpose:** Prevent PRD Quality Paradox, preserve learning opportunities
-
 ---
 
-## Cross-References & Further Reading
+## Further Reading
 
-**Related Background Documents:**
-- [after-action-report.md](../background-docs/after-action-report.md) - Details on Over-Specification Problem and SmugMug project lessons
-- [lovable-vs-claude-code.md](../background-docs/lovable-vs-claude-code.md) - Strategic vs tactical learning distinction
-- [done-vs-next.md](../background-docs/done-vs-next.md) - Phase 0 meta-skills positioning
+### Background Documentation
+- **after-action-report.md** - Details on Over-Specification Problem and SmugMug project lessons
+- **lovable-vs-claude-code.md** - Strategic vs tactical learning distinction, Phase 0 meta-skills philosophy
+- **done-vs-next.md** - Phase 0 meta-skills positioning and workflow focus
 
-**Integration with Skills Workflow:**
-- First skill in 3-phase workflow (project-brief-writer → tech-stack-advisor → deployment-advisor → project-spinup)
-- PROJECT-MODE.md created here is used by all subsequent skills
-- Brief quality affects how strictly subsequent skills enforce checkpoints
+### Related Skills
+- **tech-stack-advisor** - Uses PROJECT-MODE.md to determine checkpoint strictness (next skill in workflow)
+- **deployment-advisor** - Continues MODE-aware workflow guidance (Phase 2)
+- **project-spinup** - Final skill that completes the 3-phase workflow
+
+### Workflow Integration
+This is the first skill in the 3-phase workflow. PROJECT-MODE.md created here is used by all subsequent skills to determine checkpoint strictness and guidance style. Brief quality affects how advisory skills enforce learning checkpoints.
 
 ---
 

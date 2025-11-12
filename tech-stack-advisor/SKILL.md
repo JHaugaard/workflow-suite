@@ -733,16 +733,22 @@ This helps you understand where you are in the workflow and what comes next.
 
 ## Version History
 
-**v1.1** (2025-11-11) - Learning-Focused Refinements
+### v1.1 (2025-11-11)
+**Skills Workflow Refinement - Phase 3**
+
+Key enhancements:
 - Added allowed-tools guardrails for advisory-only mode
 - Implemented 3-level checkpoint system (LEARNING/BALANCED/DELIVERY)
 - Added brief quality detection (Over-Specification Problem protection)
 - Integrated self-hosted infrastructure evaluation framework
-- Added workflow state visibility
+- Added workflow state visibility showing Skills Phase 1 of 3
 - Enhanced PROJECT-MODE.md integration
 
-**v1.0** (2025-11-04) - Initial Release
-- Core tech stack recommendation framework
+### v1.0 (2025-11-04)
+**Initial Release**
+
+Core functionality:
+- Tech stack recommendation framework
 - Multiple decision patterns
 - Infrastructure context awareness
 
@@ -750,11 +756,19 @@ This helps you understand where you are in the workflow and what comes next.
 
 ## Further Reading
 
-For deeper context on the design decisions in this skill, see:
-- **after-action-report.md:** Details on the Over-Specification Problem and why learning matters
-- **lovable-vs-claude-code.md:** Strategic learning vs tactical learning in project development
-- **INFRASTRUCTURE_REPO_README.md:** Self-hosted infrastructure available and how to evaluate it
-- **deployment-recap.md:** Deployment options framework (used in next step)
+### Background Documentation
+- **after-action-report.md** - Over-Specification Problem and learning-focused workflow design
+- **lovable-vs-claude-code.md** - Strategic vs tactical learning, Phase 0 meta-skills philosophy
+- **INFRASTRUCTURE_REPO_README.md** - Self-hosted infrastructure details and evaluation framework
+- **deployment-recap.md** - Deployment options framework (context for next skill)
+
+### Related Skills
+- **project-brief-writer** - Creates PROJECT-MODE.md that determines checkpoint strictness (prerequisite)
+- **deployment-advisor** - Continues advisory workflow with hosting recommendations (next step)
+- **project-spinup** - Scaffolds project foundation based on tech stack decisions (final step)
+
+### Workflow Integration
+This is Phase 1 of 3 in the Skills workflow. Reads PROJECT-MODE.md to determine checkpoint level and provides technology recommendations with trade-off analysis. Detects over-specified briefs and offers conversation-based resolution.
 
 ---
 
