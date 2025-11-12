@@ -228,9 +228,26 @@ Generate a comprehensive recommendation including:
 6. **Cost Analysis**: Hosting and service costs
 7. **Next Steps**: How to proceed (usually: invoke deployment-advisor next)
 
-### Step 4: Output Format
+### Step 4: Create Handoff Document
 
-Use this structured format for clarity:
+**CRITICAL**: After analyzing the project and formulating recommendations, you MUST create a `tech-stack-decision.md` file in the current working directory.
+
+This document serves as:
+- **Handoff artifact** for the next skill in the workflow (deployment-advisor)
+- **Session bridge** allowing the decision to be loaded in a fresh session
+- **Decision record** documenting the rationale for future reference
+
+**File location**: `./tech-stack-decision.md` (same directory as PROJECT-MODE.md)
+
+**When to create**: Immediately after presenting your recommendations to the user, BEFORE running checkpoints.
+
+Use the Write tool to create this file with the complete analysis.
+
+---
+
+### Step 5: Output Format
+
+Use this structured format for both the console output AND the tech-stack-decision.md file:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -374,6 +391,9 @@ Cloud/Managed Option: ${Z}/month (likely much higher)
 🎯 RECOMMENDED NEXT STEPS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+📄 HANDOFF DOCUMENT CREATED: tech-stack-decision.md
+This file contains the complete analysis and can be referenced in new sessions.
+
 1. Review this recommendation and ask any questions
    - Not sure about a choice? Ask me to explain trade-offs
    - Want to see alternative X in more detail? Just ask
@@ -382,6 +402,7 @@ Cloud/Managed Option: ${Z}/month (likely much higher)
 2. If you agree with PRIMARY recommendation:
    → Invoke deployment-advisor skill next
    Say: "Use deployment-advisor skill for {primary stack}"
+   Note: deployment-advisor will read tech-stack-decision.md automatically
 
 3. If you want to explore alternatives:
    → Tell me which alternative interests you
@@ -784,8 +805,11 @@ When this skill is invoked:
 6. **Cost-conscious** - Factor in Hostinger budget, free tiers, self-hosting
 7. **Learning-first when appropriate** - Education may trump "optimal" choice
 8. **Practical** - Real-world considerations (deployment, maintenance, community)
+9. **CREATE HANDOFF DOCUMENT** - Always write tech-stack-decision.md with complete analysis
 
 The goal is to help John make informed decisions and understand the "why" behind tech stack choices, not just get an answer.
+
+**CRITICAL WORKFLOW REQUIREMENT**: After formulating your recommendations, you MUST use the Write tool to create `tech-stack-decision.md` in the current working directory. This file is essential for the deployment-advisor skill to function properly in a new session.
 
 ## Example Invocations
 

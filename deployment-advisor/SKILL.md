@@ -197,9 +197,26 @@ Generate a comprehensive recommendation including:
 7. **Backup Strategy**: How to backup and restore
 8. **Next Steps**: How to proceed (usually: invoke project-spinup)
 
-### Step 4: Output Format
+### Step 4: Create Handoff Document
 
-Use this structured format:
+**CRITICAL**: After analyzing the hosting requirements and formulating recommendations, you MUST create a `deployment-strategy.md` file in the current working directory.
+
+This document serves as:
+- **Handoff artifact** for the next skill in the workflow (project-spinup)
+- **Session bridge** allowing the deployment strategy to be loaded in a fresh session
+- **Deployment record** documenting the complete hosting plan for future reference
+
+**File location**: `./deployment-strategy.md` (same directory as PROJECT-MODE.md and tech-stack-decision.md)
+
+**When to create**: Immediately after presenting your recommendations to the user, BEFORE running checkpoints.
+
+Use the Write tool to create this file with the complete analysis.
+
+---
+
+### Step 5: Output Format
+
+Use this structured format for both the console output AND the deployment-strategy.md file:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -467,6 +484,9 @@ SECURITY MAINTENANCE:
 🎯 RECOMMENDED NEXT STEPS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+📄 HANDOFF DOCUMENT CREATED: deployment-strategy.md
+This file contains the complete hosting plan and can be referenced in new sessions.
+
 1. Review this hosting recommendation
    - Questions about deployment workflow? Ask me
    - Unsure about costs? I can break down further
@@ -478,11 +498,12 @@ SECURITY MAINTENANCE:
          - Tech stack: {from tech-stack-advisor}
          - Hosting: {this recommendation}
          - Learning mode: {true/false}"
+   Note: project-spinup will read deployment-strategy.md automatically
 
 3. Document hosting decision:
-   → Save this recommendation for reference
-   → Include in project README
-   → Add to infrastructure documentation
+   → Recommendation already saved to deployment-strategy.md
+   → Will be integrated into project README by project-spinup
+   → Keep for infrastructure documentation
 
 4. Set up monitoring before deploying:
    → UptimeRobot or similar
@@ -995,8 +1016,11 @@ When this skill is invoked:
 6. **Cost transparency** - Show setup + monthly costs, compare alternatives
 7. **Scaling guidance** - How to grow when project needs it
 8. **Security matters** - Always include backup, monitoring, security considerations
+9. **CREATE HANDOFF DOCUMENT** - Always write deployment-strategy.md with complete analysis
 
 The goal is to provide John with a clear, actionable hosting plan that fits his tech stack, budget, infrastructure, and learning goals.
+
+**CRITICAL WORKFLOW REQUIREMENT**: After formulating your recommendations, you MUST use the Write tool to create `deployment-strategy.md` in the current working directory. This file is essential for the project-spinup skill to function properly in a new session.
 
 ## Example Invocations
 

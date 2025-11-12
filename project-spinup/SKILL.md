@@ -29,9 +29,13 @@ This skill generates a complete, ready-to-code project foundation tailored to Jo
 
 Before invoking this skill, ensure:
 1. **PROJECT-MODE.md** exists (created by project-brief-writer)
-2. **tech-stack-advisor** skill has been run (tech stack decided)
-3. **deployment-advisor** skill has been run (deployment plan decided)
+2. **tech-stack-decision.md** exists (created by tech-stack-advisor)
+   - Contains complete tech stack recommendation with rationale
+3. **deployment-strategy.md** exists (created by deployment-advisor)
+   - Contains complete deployment strategy with workflow
 4. Project brief documented or clearly described
+
+**Note:** If handoff documents (tech-stack-decision.md or deployment-strategy.md) don't exist, the skill will ask for the information interactively. However, having these documents ensures consistent context across sessions.
 
 ## Inputs Required
 
@@ -131,10 +135,27 @@ Use these values consistently across all generated files:
 
 When this skill is invoked:
 
-### Phase 0: Check PROJECT-MODE and Determine Spinup Approach
+### Phase 0: Load Context from Handoff Documents
 
-1. **Read PROJECT-MODE.md** to understand the user's workflow commitment
-2. **Ask user about spinup approach** with MODE-informed suggestion:
+**CRITICAL**: Before proceeding, load all available context from prior skills:
+
+1. **Read PROJECT-MODE.md** (created by project-brief-writer)
+   - Understand the user's workflow commitment (LEARNING/BALANCED/DELIVERY)
+   - Use this to inform spinup approach recommendation
+
+2. **Read tech-stack-decision.md** (created by tech-stack-advisor)
+   - Load complete tech stack decision with rationale
+   - Extract tech stack details (frontend, backend, database, etc.)
+   - Understand infrastructure integration approach
+   - Note: If file doesn't exist, ask user for tech stack details
+
+3. **Read deployment-strategy.md** (created by deployment-advisor)
+   - Load complete deployment strategy with workflow
+   - Extract hosting details (provider, type, deployment steps)
+   - Understand deployment workflow and requirements
+   - Note: If file doesn't exist, ask user for hosting plan
+
+4. **Ask user about spinup approach** with MODE-informed suggestion:
 
 **Suggestion logic:**
 - If MODE = LEARNING: Suggest Guided Setup (but allow override)
@@ -1129,25 +1150,35 @@ Happy coding! 🚀
 
 When this skill is invoked:
 
-1. **Check PROJECT-MODE.md first** - Read it to provide MODE-informed suggestions for spinup approach
-2. **Ask about spinup approach** - Don't assume; present Guided Setup vs Quick Start options
-3. **Gather all required inputs** - Don't proceed until you have tech stack, hosting plan, and project details
-4. **Adapt templates to tech stack** - Don't use Next.js templates for a PHP project
-5. **Be comprehensive** - The claude.md file is the primary context for future Claude Code sessions
-6. **Include John's context** - Personal workflow, infrastructure, learning goals
-7. **Respect user choice** - Guided Setup and Quick Start are equally valid; user knows their familiarity with the stack
-8. **Explain trade-offs** - Help John understand why choices were made
-9. **Test-friendly** - Include testing setup and examples
-10. **Docker-first** - Always include docker-compose.yml for local dev
-11. **Security-conscious** - .env for secrets, .gitignore to prevent leaks
-12. **Documentation-rich** - Comments, README, claude.md all work together
-13. **Show workflow completion** - Emphasize that all skills phases are complete and project is ready for development
+1. **Load ALL handoff documents first** - Read PROJECT-MODE.md, tech-stack-decision.md, and deployment-strategy.md to load complete context from prior skills
+2. **Use handoff documents as primary source** - These contain the complete decisions with rationale; only ask user for missing info if files don't exist
+3. **Ask about spinup approach** - Don't assume; present Guided Setup vs Quick Start options with MODE-informed suggestion
+4. **Gather any remaining inputs** - Tech stack and hosting should come from handoff documents; ask for project name/description if not in brief
+5. **Adapt templates to tech stack** - Don't use Next.js templates for a PHP project
+6. **Be comprehensive** - The claude.md file is the primary context for future Claude Code sessions
+7. **Include John's context** - Personal workflow, infrastructure, learning goals
+8. **Respect user choice** - Guided Setup and Quick Start are equally valid; user knows their familiarity with the stack
+9. **Explain trade-offs** - Help John understand why choices were made
+10. **Test-friendly** - Include testing setup and examples
+11. **Docker-first** - Always include docker-compose.yml for local dev
+12. **Security-conscious** - .env for secrets, .gitignore to prevent leaks
+13. **Documentation-rich** - Comments, README, claude.md all work together
+14. **Show workflow completion** - Emphasize that all skills phases are complete and project is ready for development
 
 The goal is to give John a solid foundation to start learning and building, with Claude Code as his primary development partner.
 
 ---
 
 ## Version History
+
+### v1.2 (2025-11-12)
+**Handoff Document Integration**
+
+Key enhancements:
+- Added support for reading tech-stack-decision.md and deployment-strategy.md
+- Integrated complete context loading from all handoff documents
+- Updated prerequisites to clarify handoff document expectations
+- Enhanced workflow to prioritize handoff documents as primary source of truth
 
 ### v1.1 (2025-11-12)
 **Skills Workflow Refinement - Phase 5**
