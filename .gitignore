@@ -21,3 +21,6 @@ yarn-error.log*
 # Build outputs
 dist/
 build/
+
+# Documentation
+repo-update.md
