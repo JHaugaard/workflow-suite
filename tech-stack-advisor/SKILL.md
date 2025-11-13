@@ -165,7 +165,7 @@ This file is created by project-brief-writer skill and guides all subsequent wor
 - Heavy reliance on Claude Code for implementation
 
 #### Available Infrastructure
-- Self-hosted: Supabase, PostgreSQL, n8n, Ollama, Redis, Nginx (on Hostinger VPS)
+- Self-hosted: Supabase, PostgreSQL, n8n, Ollama, Redis, Nginx, Wiki.js (on Hostinger VPS)
 - Deployment options: Hostinger VPS or shared hosting
 - DNS: Cloudflare
 - File storage: Backblaze B2 or local VPS
@@ -187,6 +187,7 @@ This file is created by project-brief-writer skill and guides all subsequent wor
 - **Backend Services:** n8n (workflow automation), Ollama (local LLM)
 - **Caching/Queues:** Redis
 - **Reverse Proxy:** Nginx
+- **Documentation:** Wiki.js (knowledge base and documentation platform)
 - **Hosting:** Hostinger VPS ($40-60/month)
 - **CDN/DNS:** Cloudflare
 - **File Storage:** Backblaze B2 or local VPS
@@ -683,6 +684,23 @@ Example: FastAPI + PostgreSQL, Express + MongoDB
 - Flask (Python, simple, Jinja templates)
 - Express + EJS (JavaScript, template rendering)
 - Laravel (if ready for framework concepts)
+
+### Pattern 8: Documentation Site / Knowledge Base
+
+**Primary Recommendation**: Wiki.js (Self-Hosted)
+- Purpose-built for documentation and knowledge management
+- Already available in self-hosted infrastructure ($0 marginal cost)
+- Git-backed content storage
+- Markdown editing with rich features
+- Built-in search and organization
+
+**Alternatives**:
+- Next.js + MDX (custom-built documentation site)
+- Docusaurus (React-based documentation framework)
+- GitBook (managed documentation platform)
+- Notion (managed but proprietary)
+
+**Best For**: Technical documentation, team wikis, knowledge bases, project documentation portals
 
 ## Red Flags & Warnings
 
