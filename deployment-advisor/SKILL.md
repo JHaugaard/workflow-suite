@@ -165,7 +165,7 @@ Ask the user for:
 
 #### Available Infrastructure
 - **Hostinger VPS(s)**: Already has self-hosted infrastructure
-  - Supabase, PostgreSQL, n8n, Ollama, Redis, Nginx
+  - Supabase, PostgreSQL, n8n, Ollama, Redis, Nginx, Wiki.js
   - Docker-based setup
   - SSH access as user "john"
 - **DNS**: Cloudflare for all domains
@@ -1120,6 +1120,7 @@ Use recommendations as opportunities to teach:
 - **Ollama:** Local LLM inference
 - **Redis:** Caching and queues
 - **Nginx:** Reverse proxy
+- **Wiki.js:** Documentation and knowledge base platform
 - **Cloudflare:** DNS and CDN
 
 **Framework:**

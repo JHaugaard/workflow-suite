@@ -109,6 +109,7 @@ Use these values consistently across all generated files:
   - Redis (caching)
   - Nginx (reverse proxy)
   - PostgreSQL (general use)
+  - Wiki.js (documentation and knowledge base)
   - All in Docker containers
 - **Simple Database Projects**: PocketBase when appropriate
 - **File Storage**: Backblaze B2 (unless local VPS storage makes more sense)
@@ -357,6 +358,7 @@ John maintains a self-hosted infrastructure suite on Hostinger VPS(s):
 - **Redis**: Caching and sessions
 - **Nginx**: Reverse proxy and SSL termination
 - **PostgreSQL**: General database use
+- **Wiki.js**: Documentation and knowledge base platform
 
 {If project uses any of these, provide connection details/references}
 
