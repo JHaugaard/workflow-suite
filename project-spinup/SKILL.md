@@ -102,20 +102,18 @@ Use these values consistently across all generated files:
 - **Directory Structure**: src/, docs/, tests/
 
 ### Infrastructure & Hosting
-- **Self-Hosted Infrastructure**: Available on Hostinger VPS(s)
-  - Supabase (PostgreSQL, Auth, Storage, Realtime, API)
+- **Self-Hosted Infrastructure**: Available on Hostinger VPS8 (8 cores, 32GB RAM, 400GB storage)
+  - Supabase (self-hosted full stack: PostgreSQL, Auth, Storage, Realtime, REST API)
+  - PocketBase (lightweight backend: SQLite, Auth)
   - n8n (workflow automation)
   - Ollama (local LLM inference)
-  - Redis (caching)
-  - Nginx (reverse proxy)
-  - PostgreSQL (general use)
   - Wiki.js (documentation and knowledge base)
+  - Caddy (reverse proxy with automatic HTTPS)
   - All in Docker containers
-- **Simple Database Projects**: PocketBase when appropriate
 - **File Storage**: Backblaze B2 (unless local VPS storage makes more sense)
 - **DNS Provider**: Cloudflare (for all domain names)
 - **VPS Access**: SSH as user "john" (non-root)
-- **Deployment Hosts**: Hostinger VPS or shared hosting
+- **Deployment Options**: Localhost, Hostinger Shared Hosting, Cloudflare Pages, Fly.io, VPS with Docker
 
 ### Common Development Tasks
 - Feature implementation
@@ -350,24 +348,23 @@ docker compose up -d
 
 ### Self-Hosted Infrastructure (Available)
 
-John maintains a self-hosted infrastructure suite on Hostinger VPS(s):
+John maintains a self-hosted infrastructure suite on Hostinger VPS8 (8 cores, 32GB RAM, 400GB storage):
 
-- **Supabase** (self-hosted): PostgreSQL, Auth, Storage, Realtime, API
-- **n8n**: Workflow automation
-- **Ollama**: Local LLM inference for AI features
-- **Redis**: Caching and sessions
-- **Nginx**: Reverse proxy and SSL termination
-- **PostgreSQL**: General database use
+- **Supabase** (self-hosted): Full stack with PostgreSQL, Auth, Storage, Realtime, REST API
+- **PocketBase**: Lightweight backend with SQLite and Auth
+- **n8n**: Workflow automation platform
+- **Ollama**: Local LLM inference for AI features (embeddings, chat, etc.)
 - **Wiki.js**: Documentation and knowledge base platform
+- **Caddy**: Reverse proxy with automatic HTTPS
 
 {If project uses any of these, provide connection details/references}
 
 ### Project-Specific Hosting
 
-**Deployment Target**: {From deployment-advisor - e.g., "Hostinger VPS via Docker"}
+**Deployment Target**: {From deployment-advisor - e.g., "Hostinger VPS via Docker" or "Cloudflare Pages" or "Fly.io"}
 **DNS**: Cloudflare (nameservers for all domains)
-**File Storage**: {Backblaze B2 or local VPS storage}
-**SSL**: Let's Encrypt via Certbot
+**File Storage**: {Backblaze B2 or local VPS storage or provider storage}
+**SSL**: {Caddy automatic HTTPS / Let's Encrypt / Cloudflare / Provider SSL}
 
 ### Access & Credentials
 
@@ -1172,6 +1169,15 @@ The goal is to give John a solid foundation to start learning and building, with
 ---
 
 ## Version History
+
+### v1.3 (2025-11-17)
+**Infrastructure Alignment**
+
+Key changes:
+- Updated infrastructure list: removed Redis, Nginx; added VPS8 specs, Caddy, PocketBase
+- Expanded deployment options reference: Localhost, Shared Hosting, Cloudflare Pages, Fly.io, VPS
+- Updated claude.md template infrastructure section
+- Aligned with homelab-setup-v2.md infrastructure stack
 
 ### v1.2 (2025-11-12)
 **Handoff Document Integration**

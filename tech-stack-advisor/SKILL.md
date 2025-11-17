@@ -183,14 +183,15 @@ This file is created by project-brief-writer skill and guides all subsequent wor
 - Full-stack architecture comprehension
 
 #### Self-Hosted Infrastructure (Available Assets)
-- **Database:** PostgreSQL (self-hosted option via Supabase)
-- **Backend Services:** n8n (workflow automation), Ollama (local LLM)
-- **Caching/Queues:** Redis
-- **Reverse Proxy:** Nginx
+- **Backend Platform:** Supabase (self-hosted full stack: PostgreSQL, Auth, Storage, Realtime, REST API)
+- **Lightweight Backend:** PocketBase (embedded SQLite, single-binary backend)
+- **Workflow Automation:** n8n (workflow automation and integration platform)
+- **AI/LLM:** Ollama (local LLM inference for embeddings and AI features)
 - **Documentation:** Wiki.js (knowledge base and documentation platform)
-- **Hosting:** Hostinger VPS ($40-60/month)
+- **Reverse Proxy:** Caddy (automatic HTTPS, reverse proxy)
+- **Hosting:** Hostinger VPS8 (8 cores, 32GB RAM, 400GB storage)
 - **CDN/DNS:** Cloudflare
-- **File Storage:** Backblaze B2 or local VPS
+- **File Storage:** Backblaze B2 or local VPS storage
 
 ### Step 2b: Evaluate Infrastructure as Context (Not Constraint)
 
@@ -217,6 +218,85 @@ This file is created by project-brief-writer skill and guides all subsequent wor
 
 ---
 
+### Step 2c: Backend Tool Selection Framework
+
+**Key Principle:** Supabase is the default backend, but evaluate project needs to make clear recommendations.
+
+#### Supabase (Preferred Default)
+**Recommend when:**
+- Project needs relational database with advanced PostgreSQL features
+- Authentication + database + storage + realtime all needed
+- Real-time subscriptions or WebSocket features required
+- Vector embeddings needed (pgvector extension)
+- Complex queries, full-text search, or JSON operations
+- Future scaling anticipated
+- Row-level security beneficial
+
+**Examples:** SaaS apps, dashboards with real-time data, apps with embeddings/AI, multi-feature applications
+
+#### PocketBase (Lightweight Alternative)
+**Recommend when:**
+- Authentication is the primary need (minimal database use)
+- Simple CRUD operations sufficient
+- Embedded SQLite appropriate for scale
+- Single-binary simplicity valued
+- Project scope is small and well-defined
+- Learning/prototyping focus
+
+**Examples:** Simple auth-only apps, personal projects, prototypes, basic CRUD applications
+
+#### Rule Out PocketBase When:
+- ❌ Vector embeddings required (no pgvector equivalent)
+- ❌ Complex relational queries needed
+- ❌ Real-time subscriptions essential
+- ❌ PostgreSQL-specific features required
+- ❌ Anticipated growth beyond SQLite limits
+
+#### When to Present Both Options:
+Present as alternatives when:
+- Project could reasonably use either
+- Trade-offs are nuanced (simplicity vs features)
+- User preference matters more than technical requirements
+
+**In this case:** Clearly explain trade-offs, recommend primary based on slight edge, note when the other makes sense.
+
+---
+
+### Step 2d: Ancillary Infrastructure Tools
+
+Recommend these tools when project brief indicates specific needs:
+
+#### n8n (Workflow Automation)
+**Recommend when:**
+- Project brief mentions automation, workflows, or integrations
+- Need to connect multiple services or APIs
+- Scheduled tasks or event-driven workflows
+- Data transformation pipelines
+
+**Examples:** "automate user onboarding emails", "sync data between services", "scheduled reports"
+
+#### Ollama (Local LLM)
+**Recommend when:**
+- Project needs embeddings for semantic search or RAG
+- AI-powered features (content generation, analysis, chat)
+- Cost-conscious AI use (vs OpenAI API)
+- Privacy-sensitive AI processing
+
+**Examples:** "semantic search over documents", "AI-powered recommendations", "chatbot integration"
+
+#### Wiki.js (Documentation Platform)
+**Recommend when:**
+- Project is documentation-heavy or knowledge base focused
+- Team wiki or internal documentation portal
+- Technical documentation with Git-backed storage
+- Search and organization of large documentation sets
+
+**Examples:** "internal knowledge base", "project documentation site", "team wiki", "technical docs portal"
+
+**Note:** For general static documentation sites, consider alternatives like static site generators. Wiki.js is best for dynamic, searchable, collaborative documentation.
+
+---
+
 ### Step 3: Analyze & Recommend
 
 Generate a comprehensive recommendation including:
@@ -240,7 +320,7 @@ This document serves as:
 
 **File location**: `./tech-stack-decision.md` (same directory as PROJECT-MODE.md)
 
-**When to create**: Immediately after presenting your recommendations to the user, BEFORE running checkpoints.
+**When to create**: After collaborative refinement and user convergence on the recommendation. This occurs AFTER presenting recommendations in console and discussing any questions or alternatives with the user.
 
 Use the Write tool to create this file with the complete analysis.
 
@@ -547,30 +627,47 @@ Example: FastAPI + PostgreSQL, Express + MongoDB
 
 ### Database Options
 
-#### PostgreSQL
-**Best For**: Complex queries, relational data, JSON support
-**Why Recommend**: John has self-hosted PostgreSQL available
-**Use When**: Relational data, need advanced features (full-text search, JSON, etc.)
+#### Supabase (PostgreSQL + BaaS) - PREFERRED DEFAULT
+**Best For**: Most full-stack applications
+**Why Recommend**:
+- Self-hosted full stack available on VPS8 ($0 marginal cost)
+- Complete backend: PostgreSQL + Auth + Storage + Realtime + REST API
+- pgvector for embeddings and AI features
+- Production-ready with Row-Level Security
+**Use When**:
+- Need relational database with advanced PostgreSQL features
+- Auth + database + storage + realtime all needed
+- Vector embeddings required (semantic search, RAG)
+- Complex queries, full-text search, JSON operations
+- Future scaling anticipated
+
+#### PocketBase (SQLite + BaaS) - LIGHTWEIGHT ALTERNATIVE
+**Best For**: Simple projects with minimal backend needs
+**Why Recommend**:
+- Self-hosted single binary available on VPS8 ($0 marginal cost)
+- Complete auth + database in one executable
+- Zero configuration, embedded SQLite
+- Excellent for prototypes and learning
+**Use When**:
+- Authentication is primary need (minimal database use)
+- Simple CRUD operations sufficient
+- Project scope is small and well-defined
+- Single-binary simplicity valued
+**Rule Out When**:
+- Vector embeddings required (no pgvector equivalent)
+- Complex relational queries needed
+- PostgreSQL-specific features required
+
+#### PostgreSQL (Standalone)
+**Best For**: Projects needing PostgreSQL without full BaaS features
+**Why Recommend**: Available as part of self-hosted Supabase
+**Use When**: Building custom backend, don't need Supabase's additional features
+**Note**: Generally prefer Supabase over standalone PostgreSQL unless custom architecture required
 
 #### MySQL
-**Best For**: Relational data, shared hosting compatibility
-**Why Recommend**: Widely supported, easy to deploy
-**Use When**: Traditional hosting, straightforward relational needs
-
-#### Supabase (PostgreSQL + BaaS)
-**Best For**: Rapid development, auth + database + storage in one
-**Why Recommend**: John has self-hosted Supabase available
-**Use When**: Need auth + realtime + storage, want managed features
-
-#### SQLite
-**Best For**: Simple apps, prototypes, embedded databases
-**Why Recommend**: Zero configuration, file-based
-**Use When**: Very simple projects, learning SQL basics
-
-#### PocketBase
-**Best For**: Simple projects with backend needs
-**Why Recommend**: All-in-one solution, minimal setup
-**Use When**: Project is simple, want to focus on frontend
+**Best For**: Shared hosting compatibility, traditional PHP apps
+**Why Recommend**: Widely supported on shared hosting (Hostinger)
+**Use When**: Deploying to shared hosting, traditional LAMP/LEMP stack
 
 ### Authentication Options
 
@@ -702,38 +799,6 @@ Example: FastAPI + PostgreSQL, Express + MongoDB
 
 **Best For**: Technical documentation, team wikis, knowledge bases, project documentation portals
 
-## Red Flags & Warnings
-
-### When to Push Back
-
-**User wants bleeding-edge framework**:
-```
-CONCERN: Brand new framework with small community
-INSTEAD: Suggest established option, explain benefits of maturity
-REASON: Support, packages, documentation, stability
-```
-
-**User wants tech stack way above complexity needs**:
-```
-CONCERN: Microservices + Kubernetes for simple blog
-INSTEAD: Suggest simpler monolith approach
-REASON: Maintenance burden, learning curve, overkill
-```
-
-**User wants stack incompatible with hosting**:
-```
-CONCERN: Choosing stack that doesn't run on available hosting
-INSTEAD: Clarify hosting constraints, suggest compatible stack
-REASON: Deployment will fail or require expensive changes
-```
-
-**User wants tech for resume, not project fit**:
-```
-CONCERN: "I want to learn React" but project suits Laravel better
-INSTEAD: Acknowledge learning goal, suggest React project better suited
-REASON: Forced fit leads to frustration, suboptimal experience
-```
-
 ## Teaching Moments
 
 Use recommendations as opportunities to teach:
@@ -771,6 +836,18 @@ This helps you understand where you are in the workflow and what comes next.
 ---
 
 ## Version History
+
+### v1.2 (2025-11-17)
+**Infrastructure Alignment & Workflow Refinement**
+
+Key changes:
+- Updated infrastructure list: removed Redis, added VPS8 specs, Caddy, PocketBase
+- Added Backend Tool Selection Framework (Step 2c): Supabase vs PocketBase decision criteria
+- Added Ancillary Infrastructure Tools section (Step 2d): n8n, Ollama, Wiki.js recommendation triggers
+- Revised Database Options: Supabase as preferred default, clear PocketBase positioning
+- Removed "Red Flags & Warnings" section (incompatible with collaborative refinement workflow)
+- Fixed handoff document timing: created AFTER collaborative refinement, not before
+- Aligned with homelab-setup-v2.md infrastructure stack
 
 ### v1.1 (2025-11-11)
 **Skills Workflow Refinement - Phase 3**
