@@ -50,12 +50,10 @@ This skill includes checkpoints to validate your deployment understanding before
 
 You're exploring deployment options and trade-offs. Checkpoints are detailed:
 
-**After recommendations are presented, you'll answer 5 comprehension questions:**
-- Question 1: Explain why the primary recommendation fits your tech stack
-- Question 2: What's a key difference between self-hosted and PaaS?
-- Question 3: When would you choose the Alternative hosting instead?
-- Question 4: What are the main maintenance responsibilities?
-- Question 5: How does this deployment strategy align with your project's scale?
+**After recommendations are presented, you'll answer 3 focused comprehension questions:**
+- Question 1: Why does the primary recommendation fit this project's core deployment needs?
+- Question 2: What is the single most important trade-off if you chose Alternative 1 instead?
+- Question 3: What is the biggest maintenance responsibility or operational challenge this deployment introduces?
 
 **Rules for LEARNING mode:**
 - ✅ Short but complete answers acceptable (not essays)
@@ -164,9 +162,14 @@ Ask the user for:
 **Always factor in**:
 
 #### Available Infrastructure
-- **Hostinger VPS(s)**: Already has self-hosted infrastructure
-  - Supabase, PostgreSQL, n8n, Ollama, Redis, Nginx, Wiki.js
-  - Docker-based setup
+- **Hostinger VPS8**: Self-hosted infrastructure (8 cores, 32GB RAM, 400GB storage)
+  - Supabase (self-hosted full stack: PostgreSQL, Auth, Storage, Realtime, REST API)
+  - PocketBase (single-binary backend with SQLite)
+  - n8n (workflow automation)
+  - Ollama (local LLM inference)
+  - Wiki.js (documentation platform)
+  - Caddy (reverse proxy, automatic HTTPS)
+  - Docker/Docker Compose based setup
   - SSH access as user "john"
 - **DNS**: Cloudflare for all domains
 - **File Storage**: Backblaze B2 account available
@@ -208,7 +211,7 @@ This document serves as:
 
 **File location**: `./deployment-strategy.md` (same directory as PROJECT-MODE.md and tech-stack-decision.md)
 
-**When to create**: Immediately after presenting your recommendations to the user, BEFORE running checkpoints.
+**When to create**: After collaborative refinement and user convergence on the recommendation. This occurs AFTER presenting recommendations in console and discussing any questions or alternatives with the user.
 
 Use the Write tool to create this file with the complete analysis.
 
@@ -559,21 +562,24 @@ Use this framework when analyzing options:
 ### Recommendation Logic
 
 **Choose Localhost When**:
-- Personal utility app (not for sharing)
+- Personal utility app for your own use only
+- Low-usage applications that don't need global access
 - Learning and experimentation
 - Testing before public deployment
-- No distribution requirements
+- No sharing or distribution requirements
+- Project is genuinely personal-scale
 
-Example: Local development tools, learning projects, prototypes
+Example: Local development tools, learning projects, prototypes, personal productivity apps
 
 **Choose Hostinger Shared Hosting When**:
-- Simple PHP application only
-- Very low traffic
+- Simple PHP-based application
+- Traditional LAMP stack preferred
 - Minimal maintenance desired
 - No Docker/container needs
-- Absolute lowest cost priority
+- Want to use existing shared hosting account ($0 marginal cost)
+- cPanel management interface preferred
 
-Example: Simple PHP blog, WordPress site, basic company website
+Example: Simple PHP blog, WordPress site, basic company website, PHP CRUD apps
 
 **Choose Cloudflare Pages When**:
 - Frontend-only application
@@ -656,12 +662,16 @@ This skill evaluates **five deployment options** relevant to small personal proj
 - No backup/redundancy concerns
 
 **When to Recommend**:
-- Personal utility app (local-only)
+- Personal utility app for your own use only
+- Low-usage applications (single user or small group)
 - Learning and experimentation phase
 - Testing before public deployment
-- No sharing/distribution requirements
+- No sharing or global distribution requirements
+- Project is genuinely personal-scale
 
-**Migration Path**: Code transfers directly to any other option (Pages, Fly.io, VPS)
+**Valid as Production**: Yes, for truly personal-use applications. Not every app needs public deployment.
+
+**Migration Path**: Code transfers directly to any other option (Pages, Fly.io, VPS) when ready
 
 ---
 
@@ -674,30 +684,30 @@ This skill evaluates **five deployment options** relevant to small personal proj
 - WordPress sites
 - Static websites
 - Projects with minimal backend requirements
-- Low-cost baseline option
+- Traditional LAMP stack applications
 
-**Cost**: $3-5/month
+**Cost**: $0 marginal cost if account already exists, otherwise $3-5/month
 
 **Tech Stacks**: PHP + MySQL only (no Node.js, Python, Docker)
 
 **Pros**:
-- Very cheap
+- $0 marginal cost if shared hosting account already exists
 - Managed infrastructure (Hostinger handles servers)
 - Click-based management via cPanel
-- Easy to deploy (FTP, cPanel)
+- Easy to deploy (FTP, cPanel, Git integration)
 - Pre-installed PHP, MySQL
-- Minimal maintenance
+- Minimal maintenance required
+- Familiar interface (cPanel)
+- Predictable performance for simple sites
 
 **Cons**:
 - Limited to PHP + MySQL
 - No Docker support
 - No custom runtime languages
-- Shared resources (performance varies)
-- No Docker or custom services
-- Limited control
-- Manual deployment only
+- Shared resources (performance varies under heavy load)
+- Limited control over server configuration
 - Single region only
-- Limited for development learning (too abstracted)
+- Manual deployment workflow (though Git supported)
 
 **Databases & Storage**:
 - MySQL included
@@ -709,17 +719,16 @@ This skill evaluates **five deployment options** relevant to small personal proj
 - ❌ Can't run Docker containers
 - ❌ Can't self-host Supabase, n8n, Ollama
 - ❌ Can't run custom services
+- ✅ Can call external APIs (self-hosted VPS services via HTTP)
 
 **When to Recommend**:
 - Simple PHP-only application
-- WordPress blogs
-- Simple company websites
-- Static content sites
-- Personal project, very low traffic
-- Absolute lowest cost needed
-- No backend complexity
-
-**Note**: Generally avoid for modern learning projects - too limited.
+- WordPress blogs or PHP CMS sites
+- Basic company websites
+- Static content sites with some PHP
+- Already have shared hosting account ($0 marginal cost)
+- Minimal maintenance tolerance
+- Traditional web development approach preferred
 
 ---
 
@@ -1048,45 +1057,6 @@ These patterns demonstrate how to combine the 5 deployment options with differen
 **Cost**: $0
 **Best For**: Learning, experimentation, personal utilities, testing
 
-## Red Flags & Warnings
-
-### When to Push Back
-
-**User wants expensive cloud services for learning project**:
-```
-CONCERN: Paying $100+/month for AWS/GCP when VPS or Fly.io would work
-INSTEAD: Recommend VPS (existing infrastructure) or Fly.io ($20-50/mo)
-REASON: Learning goal + budget consciousness + has infrastructure
-```
-
-**User wants self-hosted VPS for production SaaS with uptime needs**:
-```
-CONCERN: Single VPS for business-critical app with paying customers
-INSTEAD: Recommend Fly.io with redundancy or managed cloud provider
-REASON: Downtime = lost revenue, needs reliability and auto-scaling
-```
-
-**User wants complex infrastructure for simple static site**:
-```
-CONCERN: Setting up VPS/Docker for a basic portfolio site
-INSTEAD: Recommend Cloudflare Pages
-REASON: Zero cost, zero maintenance, instant global deployment
-```
-
-**User wants shared hosting for Next.js/Node.js app**:
-```
-CONCERN: Shared hosting doesn't support Node.js
-INSTEAD: Recommend Cloudflare Pages (static) or VPS/Fly.io (full-stack)
-REASON: Tech stack incompatibility
-```
-
-**User wants Fly.io but has no budget**:
-```
-CONCERN: $20-50/month cost when VPS already exists
-INSTEAD: Recommend VPS with Docker (marginal cost $0)
-REASON: Budget constraints, learning goals still met with VPS
-```
-
 ## Teaching Moments
 
 Use recommendations as opportunities to teach:
@@ -1113,13 +1083,14 @@ Use recommendations as opportunities to teach:
 **Key principle:** Evaluate all deployment options with honest trade-off analysis of available self-hosted infrastructure.
 
 **Available Assets:**
-- **Hostinger VPS:** $40-60/month (likely already running services)
-- **Docker:** Containerized deployments
-- **PostgreSQL:** Self-hosted database option
+- **Hostinger VPS8:** $40-60/month (8 cores, 32GB RAM, 400GB storage)
+- **Docker/Docker Compose:** Containerized deployments
+- **Supabase:** Self-hosted full stack (PostgreSQL, Auth, Storage, Realtime, REST API)
+- **PocketBase:** Lightweight backend (SQLite, Auth)
+- **PostgreSQL:** Available through Supabase or standalone
 - **n8n:** Workflow automation
 - **Ollama:** Local LLM inference
-- **Redis:** Caching and queues
-- **Nginx:** Reverse proxy
+- **Caddy:** Reverse proxy with automatic HTTPS
 - **Wiki.js:** Documentation and knowledge base platform
 - **Cloudflare:** DNS and CDN
 
@@ -1163,6 +1134,30 @@ This helps you understand your progress and what comes next.
 ---
 
 ## Version History
+
+### v1.4 (2025-01-17)
+**v1.0-ready UX refinements based on Gemini Pro 2.5 review**
+
+Key changes:
+- **Reduced LEARNING mode checkpoint questions from 5 to 3** (lines 53-56)
+  - Question 1: Why does primary fit this project's core deployment needs?
+  - Question 2: What is the single most important trade-off vs Alternative 1?
+  - Question 3: What is the biggest maintenance responsibility or operational challenge?
+  - 40% reduction in checkpoint burden while preserving pedagogical value
+- Improves user experience without compromising learning outcomes
+
+**Status:** v1.0-ready
+
+### v1.3 (2025-11-17)
+**Infrastructure Alignment & Workflow Refinement**
+
+Key changes:
+- Updated infrastructure list: removed Redis, added VPS8 specs, Caddy, PocketBase, Supabase details
+- Revised localhost positioning: valid production option for personal-use/low-usage apps
+- Revised shared hosting positioning: $0 marginal cost emphasis, removed negative framing
+- Removed "Red Flags & Warnings" section (incompatible with collaborative refinement workflow)
+- Fixed handoff document timing: created AFTER collaborative refinement, not before
+- Aligned with homelab-setup-v2.md infrastructure stack
 
 ### v1.2 (2025-11-12)
 **Deployment Options Alignment**

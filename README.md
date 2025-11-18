@@ -1,254 +1,292 @@
-# Skill Builder - Development Workspace
+# Workflow Suite
 
-A development workspace for building new Claude Code skills with all necessary context, iteration history, and background documentation.
+A comprehensive suite of Claude Code skills and coordination tools for structured project development, from initial concept through deployment-ready foundation.
 
 ## Purpose
 
-This directory serves as a **development lab for creating NEW skills**. It contains all the research, context, and iteration history needed to build high-quality Claude Code skills. Once skills are ready for deployment, they move to `~/.claude/skills` where they are maintained as production assets.
+This repository contains:
+- **Workflow Skills**: A coordinated 4-skill workflow for project development
+- **Coordinator Agent**: Tools for orchestrating the workflow with checkpoints
+- **Documentation**: Design notes and workflow philosophy
 
 ## Repository Status
 
-**Active Development Workspace** - Used for building new skills and documenting the development process.
+**Active Development** - Skills are deployed to production (`~/.claude/skills`), while this repository serves as the development workspace and documentation hub.
 
-**GitHub Repository**: [JHaugaard/skill-builder](https://github.com/JHaugaard/skill-builder)
-
----
-
-## Skills Developed Here
-
-### Deployed Skills (Now maintained in ~/.claude/skills)
-
-The following skills were built in this workspace and have been deployed to production. **Do NOT update these skills here.** All ongoing maintenance happens in `~/.claude/skills`.
-
-#### 1. deployment-advisor
-- **Formerly**: hosting-advisor
-- **Purpose**: Recommend hosting strategy based on tech stack and project needs
-- **Status**: Deployed - maintain in ~/.claude/skills
-- **Built**: November 2025
-
-#### 2. project-spinup
-- **Formerly**: project-starter
-- **Purpose**: Generate complete project foundations with personalized setup
-- **Status**: Deployed - maintain in ~/.claude/skills
-- **Built**: November 2025
-
-#### 3. tech-stack-advisor
-- **Purpose**: Analyze requirements and recommend appropriate technology stacks
-- **Status**: Deployed - maintain in ~/.claude/skills
-- **Built**: November 2025
-
-#### 4. project-brief-writer
-- **Purpose**: Create comprehensive PRD documents from project ideas
-- **Status**: Deployed - maintain in ~/.claude/skills
-- **Built**: November 2025
+**GitHub Repository**: [JHaugaard/workflow-suite](https://github.com/JHaugaard/workflow-suite)
 
 ---
 
-## Workflow Pattern
+## The Workflow Skills Suite
 
-### Building New Skills (Work happens HERE)
+### Core Skills (Phase 0-3)
 
-```bash
-# 1. Start development in skill-builder
-cd /Volumes/dev/develop/skill-builder/
+A coordinated sequence of skills that guide project development from idea to foundation:
 
-# 2. Create new skill directory
-mkdir new-skill-name
+#### 1. project-brief-writer (Phase 0)
+- **Purpose**: Transform rough ideas into problem-focused project briefs
+- **Creates**: PROJECT-MODE.md, brief.md
+- **Status**: Deployed to `~/.claude/skills`
+- **Location**: [skills/project-brief-writer/](skills/project-brief-writer/)
 
-# 3. Develop skill with all context available
-# - Use background-docs/ for reference
-# - Iterate with Claude Code
-# - Test and refine
+#### 2. tech-stack-advisor (Phase 1)
+- **Purpose**: Recommend technology stack with trade-off analysis
+- **Creates**: tech-stack-decision.md
+- **Status**: Deployed to `~/.claude/skills`
+- **Location**: [skills/tech-stack-advisor/](skills/tech-stack-advisor/)
 
-# 4. When ready for deployment, copy to production
-cp -R new-skill-name /Users/john/.claude/skills/
+#### 3. deployment-advisor (Phase 2)
+- **Purpose**: Recommend hosting strategy and deployment workflow
+- **Creates**: deployment-strategy.md
+- **Status**: Deployed to `~/.claude/skills`
+- **Location**: [skills/deployment-advisor/](skills/deployment-advisor/)
 
-# 5. Deploy to GitHub (from ~/.claude/skills)
-cd /Users/john/.claude/skills
-git add new-skill-name/
-git commit -m "Add new-skill-name to skills suite"
-git push origin main
+#### 4. project-spinup (Phase 3)
+- **Purpose**: Generate project foundation with Docker, structure, and learning roadmap
+- **Creates**: Complete project scaffold with claude.md
+- **Status**: Deployed to `~/.claude/skills`
+- **Location**: [skills/project-spinup/](skills/project-spinup/)
 
-# 6. The skill now lives in ~/.claude/skills
-# Keep the version here as historical archive
+### Future Skills (In Development)
+
+#### 5. workflow-status
+- **Purpose**: Track and visualize workflow progress across phases
+- **Status**: In development
+- **Location**: [skills/workflow-status/](skills/workflow-status/)
+
+#### 6. ci-cd-implement (Planned)
+- **Purpose**: Set up continuous integration and deployment pipelines
+- **Status**: Planned
+
+---
+
+## The Workflow Coordinator Agent
+
+A Claude Code agent that orchestrates the workflow skills suite with proper sequencing, checkpoint validation, and progress tracking.
+
+**Documentation**:
+- [agent/workflow-agent-notes.md](agent/workflow-agent-notes.md) - Complete agent design guide
+- [agent/agent-ideas.md](agent/agent-ideas.md) - Initial concepts and brainstorming
+- [agent/moonshot.md](agent/moonshot.md) - Historical: Original learning-focused agent concept
+
+**Status**: Design phase - implementation pending
+
+---
+
+## Workflow Philosophy
+
+### The Skills Workflow Pattern
+
+```
+Project Idea
+    ↓
+[Phase 0] project-brief-writer
+    → Creates: PROJECT-MODE.md, brief.md
+    ↓
+[Phase 1] tech-stack-advisor
+    → Creates: tech-stack-decision.md
+    ↓
+[Phase 2] deployment-advisor
+    → Creates: deployment-strategy.md
+    ↓
+[Phase 3] project-spinup
+    → Creates: Complete project foundation
+    ↓
+Ready for Development
 ```
 
-### Maintaining Deployed Skills (Work happens in ~/.claude/skills)
+### Key Principles
 
-```bash
-# IMPORTANT: All updates to deployed skills happen in ~/.claude/skills
-cd /Users/john/.claude/skills
+1. **Sequential Phases**: Each skill builds on artifacts from previous phases
+2. **Handoff Documents**: Skills create documents that feed into next skill
+3. **Project Modes**: LEARNING/BALANCED/DELIVERY mode set in Phase 0 guides all subsequent phases
+4. **Checkpoint Validation**: Understanding validated before progressing
+5. **Self-Contained Skills**: Each skill is comprehensive and executable independently
 
-# Make changes to skill files
-# Edit deployment-advisor/SKILL.md (or any other skill)
+### Integration with Coordinator Agent
 
-# Commit and push changes
-git add deployment-advisor/
-git commit -m "Update deployment-advisor: add new pattern"
-git push origin main
-
-# Sync to Mac Mini
-# (On Mac Mini)
-cd /Users/john/.claude/skills
-git pull origin main
-```
-
-**NEVER sync changes back from ~/.claude/skills to skill-builder**
+The workflow coordinator agent (in development) will:
+- Orchestrate skill invocation in proper sequence
+- Enforce checkpoint validation between phases
+- Maintain workflow state across sessions
+- Provide progress visibility
+- Prevent phase skipping without validation
 
 ---
 
 ## Directory Structure
 
 ```
-skill-builder/
-├── README.md                    # This file
-├── repo-update.md              # Guide for syncing skills (gitignored)
-├── HANDOFF-DOCUMENTATION.md    # Session continuity system
-├── claude-code-agent-skills.md # Reference documentation
+workflow-suite/
+├── README.md                      # This file
+├── HANDOFF-DOCUMENTATION.md       # Session continuity system
+├── .gitignore
+├── .claude/
 │
-├── background-docs/            # Context and research
-│   ├── claude-background.md
-│   ├── deployment-patterns.md
-│   └── ... (other reference docs)
+├── skills/                        # The workflow skills suite
+│   ├── project-brief-writer/
+│   │   └── SKILL.md              # Phase 0: Project brief creation
+│   ├── tech-stack-advisor/
+│   │   └── SKILL.md              # Phase 1: Tech stack selection
+│   ├── deployment-advisor/
+│   │   └── SKILL.md              # Phase 2: Deployment planning
+│   ├── project-spinup/
+│   │   └── SKILL.md              # Phase 3: Foundation generation
+│   └── workflow-status/
+│       └── (in development)       # Progress tracking
 │
-├── deployment-advisor/         # ARCHIVED - deployed skill
-│   └── SKILL.md
+├── agent/                         # Workflow coordinator agent
+│   ├── workflow-agent-notes.md   # Main agent design document
+│   ├── agent-ideas.md            # Brainstorming and concepts
+│   └── moonshot.md               # Historical: Original concept
 │
-├── project-spinup/            # ARCHIVED - deployed skill
-│   ├── SKILL.md
-│   ├── EXAMPLES.md
-│   └── QUICK_REFERENCE.md
+├── docs/                          # Workflow documentation
+│   └── (documentation files)
 │
-├── tech-stack-advisor/        # ARCHIVED - deployed skill
-│   └── SKILL.md
-│
-└── project-brief-writer/      # ARCHIVED - deployed skill
-    └── SKILL.md
+└── for-removal/                   # Files segregated for potential removal
+    ├── background-docs/          # General context (not workflow-specific)
+    ├── claude-code-agent-skills.md
+    ├── gemini-review.md
+    ├── homelab-setup-v2.md
+    └── repo-update.md
 ```
+
+---
+
+## Usage
+
+### Using the Workflow Skills
+
+The skills are deployed to `~/.claude/skills` and can be invoked in Claude Code:
+
+```
+# Start a new project workflow
+Skill: project-brief-writer
+
+# After brief is complete, choose tech stack
+Skill: tech-stack-advisor
+
+# After tech decision, plan deployment
+Skill: deployment-advisor
+
+# Finally, create project foundation
+Skill: project-spinup
+```
+
+Each skill reads handoff documents from previous phases and creates artifacts for the next phase.
+
+### Building the Coordinator Agent
+
+See [agent/workflow-agent-notes.md](agent/workflow-agent-notes.md) for complete instructions on building the workflow coordinator agent.
 
 ---
 
 ## Two Repository System
 
-### This Repository (skill-builder)
-- **Purpose**: Development workspace for NEW skills
-- **Location**: `/Volumes/dev/develop/skill-builder`
-- **GitHub**: [JHaugaard/skill-builder](https://github.com/JHaugaard/skill-builder)
-- **Updates**: Only when building new skills
-- **Contains**: Development history, context, background docs
+### This Repository (workflow-suite)
+- **Purpose**: Development workspace for workflow skills and coordinator agent
+- **Location**: `/Volumes/dev/develop/workflow-suite`
+- **GitHub**: [JHaugaard/workflow-suite](https://github.com/JHaugaard/workflow-suite)
+- **Updates**: Design, documentation, new skill development
 
 ### Production Repository (claude-skills)
 - **Purpose**: Deployed, production-ready skills
-- **Location**: `/Users/john/.claude/skills` (both machines)
+- **Location**: `~/.claude/skills` (both machines)
 - **GitHub**: [JHaugaard/claude-skills](https://github.com/JHaugaard/claude-skills)
-- **Updates**: All ongoing skill maintenance
-- **Contains**: Only final SKILL.md files (clean)
+- **Updates**: Skill maintenance and refinements
+
+**Workflow**: Skills developed here → Deployed to `~/.claude/skills` → Maintained in production
 
 ---
 
-## Why This Pattern Works
+## Development Workflow
 
-### Context Separation
-- **Building phase**: Needs extensive context, research, iteration (happens here)
-- **Maintenance phase**: Needs focused updates to self-contained skills (happens in ~/.claude/skills)
+### Working on Skills
 
-### Single Source of Truth
-- **New skills**: Built here, then deployed
-- **Deployed skills**: SSOT is ~/.claude/skills
-- **One-way flow**: skill-builder → ~/.claude/skills (never reverse)
+```bash
+# All skill development happens here
+cd /Volumes/dev/develop/workflow-suite/skills/[skill-name]
 
-### Skills Are Self-Documenting
-Each SKILL.md file is comprehensive (400-800 lines) and contains:
-- Complete purpose and usage instructions
-- Workflow and decision frameworks
-- Examples and patterns
-- Everything Claude needs to understand and refine it
+# Edit SKILL.md
+# Test with Claude Code
 
-The background-docs were scaffolding for building; the final skills don't need them for refinements.
+# When ready for deployment
+cp -R [skill-name] ~/.claude/skills/
+
+# Maintain deployed version
+cd ~/.claude/skills
+git add [skill-name]/
+git commit -m "Update [skill-name]: description"
+git push origin main
+```
+
+### Building the Coordinator Agent
+
+```bash
+# Agent development happens here
+cd /Volumes/dev/develop/workflow-suite/agent/
+
+# Follow workflow-agent-notes.md guide
+# Create agent file in ~/.claude/commands/
+
+# Test agent in Claude Code
+/workflow-coordinator
+```
 
 ---
 
-## Key Files & Documentation
-
-### repo-update.md (gitignored)
-Step-by-step guide for syncing skills between machines:
-- Part 1: Update skills on MacBook
-- Part 2: Set up skills on Mac Mini
-- Part 3: Future workflow for updates
+## Key Files
 
 ### HANDOFF-DOCUMENTATION.md
-System for maintaining session continuity when working with Claude Code across multiple sessions.
+System for maintaining session continuity when working with Claude Code across multiple sessions. Documents decisions, context, and next steps.
 
-### background-docs/
-Research and context files used during skill development:
-- Reference documentation
-- Design patterns
-- Technical requirements
-- Infrastructure specifications
+### Skills Documentation
+Each skill directory contains:
+- **SKILL.md**: Complete skill definition (400-800 lines)
+- Self-contained with purpose, workflows, examples, and version history
 
----
-
-## Important Reminders
-
-### DO:
-- ✅ Build new skills in this directory
-- ✅ Use background-docs/ for context and research
-- ✅ Copy completed skills to ~/.claude/skills for deployment
-- ✅ Maintain deployed skills in ~/.claude/skills
-- ✅ Keep archived versions here for historical reference
-- ✅ Commit new skill development work to this repo
-
-### DON'T:
-- ❌ Update deployed skills in this directory
-- ❌ Sync changes from ~/.claude/skills back to here
-- ❌ Use this directory for skill maintenance/refinements
-- ❌ Confuse development workspace with production deployment
+### Agent Documentation
+- **workflow-agent-notes.md**: Complete guide for building coordinator agent
+- **agent-ideas.md**: Brainstorming and design concepts
+- **moonshot.md**: Historical document from initial agent concept
 
 ---
 
-## Getting Started with a New Skill
+## Version History
 
-1. **Brainstorm and research** the skill concept
-2. **Create a new directory** in skill-builder/
-3. **Start with SKILL.md** following the established pattern
-4. **Iterate with Claude Code** using all available context
-5. **Test the skill** in Claude Code
-6. **When ready**, copy to ~/.claude/skills and deploy
-7. **Archive the development version** here for reference
+**v2.0** (November 18, 2025)
+- Reorganized as workflow-suite (formerly skill-builder)
+- Focused exclusively on workflow skills and coordinator agent
+- Created new directory structure (skills/, agent/, docs/)
+- Updated documentation for workflow-centric purpose
+
+**v1.0** (November 2025)
+- Initial skill-builder workspace setup
+- Developed 4 core workflow skills
+- Established two-repository pattern
+- Created deployment workflow
 
 ---
 
 ## Related Resources
 
-### Claude Code Skills Documentation
+### Claude Code Documentation
 - [Official Claude Code Docs](https://docs.claude.com/en/docs/claude-code)
-- Skills guide in background-docs/
+- Skills system and agent patterns
 
-### Your Infrastructure Context
+### Infrastructure Context
 - **Hosting**: Hostinger VPS (Docker-based)
-- **Self-hosted**: Supabase, PostgreSQL, n8n, Ollama, Redis, Nginx, Wiki.js
+- **Self-hosted**: Supabase, PocketBase, n8n, Ollama, Wiki.js, Caddy
 - **DNS**: Cloudflare
 - **File Storage**: Backblaze B2
 - **Development**: Heavy reliance on Claude Code
 
 ---
 
-## Version History
-
-**v1.0** (November 2025)
-- Initial skill-builder workspace setup
-- Developed 4 core skills for project workflow
-- Established two-repository pattern
-- Created deployment workflow
-
----
-
 ## Notes
 
-This README documents the pattern and workflow established through the development of the first four skills. The approach balances:
-- Detailed context for building (here)
-- Clean deployment for production (~/.claude/skills)
-- Clear separation of development vs. maintenance phases
-- Sustainable long-term workflow for hobbyist development
+This repository represents a focused workflow system for structured project development. The 4-skill workflow suite guides from initial concept through deployment-ready foundation, while the coordinator agent (in development) will orchestrate the journey with proper sequencing and validation.
 
-As you build more skills, this pattern will continue to serve you well. Each skill built here adds to your understanding and capability while maintaining a clean, manageable production environment.
+The workflow pattern has emerged through practical use and iteration, balancing comprehensive guidance with execution efficiency. Each skill is self-contained and thoroughly documented, making the system maintainable and extensible.
+
+**Philosophy**: Structured learning and project development through coordinated skills, with flexibility for different project modes (LEARNING/BALANCED/DELIVERY).
