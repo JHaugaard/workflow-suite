@@ -49,12 +49,10 @@ This skill includes checkpoints to validate your understanding before proceeding
 
 You're exploring technology trade-offs and alternatives. Checkpoints are detailed:
 
-**After recommendations are presented, you'll answer 5 comprehension questions:**
-- Question 1: Explain why the primary recommendation fits your project
-- Question 2: What's a key trade-off between primary and Alternative 1?
-- Question 3: When would you choose Alternative 2 instead?
-- Question 4: What's the learning opportunity in this stack?
-- Question 5: How does this stack use available infrastructure?
+**After recommendations are presented, you'll answer 3 focused comprehension questions:**
+- Question 1: Why does the primary recommendation fit this project's core need?
+- Question 2: What is the single most important trade-off if you chose Alternative 1 instead?
+- Question 3: What is the biggest new responsibility or learning challenge this stack introduces?
 
 **Rules for LEARNING mode:**
 - ✅ Short but complete answers acceptable (not essays)
@@ -836,6 +834,19 @@ This helps you understand where you are in the workflow and what comes next.
 ---
 
 ## Version History
+
+### v1.3 (2025-01-17)
+**v1.0-ready UX refinements based on Gemini Pro 2.5 review**
+
+Key changes:
+- **Reduced LEARNING mode checkpoint questions from 5 to 3** (lines 52-55)
+  - Question 1: Why does primary fit this project's core need?
+  - Question 2: What is the single most important trade-off vs Alternative 1?
+  - Question 3: What is the biggest new responsibility or learning challenge?
+  - 40% reduction in checkpoint burden while preserving pedagogical value
+- Improves user experience without compromising learning outcomes
+
+**Status:** v1.0-ready
 
 ### v1.2 (2025-11-17)
 **Infrastructure Alignment & Workflow Refinement**

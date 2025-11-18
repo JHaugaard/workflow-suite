@@ -50,12 +50,10 @@ This skill includes checkpoints to validate your deployment understanding before
 
 You're exploring deployment options and trade-offs. Checkpoints are detailed:
 
-**After recommendations are presented, you'll answer 5 comprehension questions:**
-- Question 1: Explain why the primary recommendation fits your tech stack
-- Question 2: What's a key difference between self-hosted and PaaS?
-- Question 3: When would you choose the Alternative hosting instead?
-- Question 4: What are the main maintenance responsibilities?
-- Question 5: How does this deployment strategy align with your project's scale?
+**After recommendations are presented, you'll answer 3 focused comprehension questions:**
+- Question 1: Why does the primary recommendation fit this project's core deployment needs?
+- Question 2: What is the single most important trade-off if you chose Alternative 1 instead?
+- Question 3: What is the biggest maintenance responsibility or operational challenge this deployment introduces?
 
 **Rules for LEARNING mode:**
 - ✅ Short but complete answers acceptable (not essays)
@@ -1136,6 +1134,19 @@ This helps you understand your progress and what comes next.
 ---
 
 ## Version History
+
+### v1.4 (2025-01-17)
+**v1.0-ready UX refinements based on Gemini Pro 2.5 review**
+
+Key changes:
+- **Reduced LEARNING mode checkpoint questions from 5 to 3** (lines 53-56)
+  - Question 1: Why does primary fit this project's core deployment needs?
+  - Question 2: What is the single most important trade-off vs Alternative 1?
+  - Question 3: What is the biggest maintenance responsibility or operational challenge?
+  - 40% reduction in checkpoint burden while preserving pedagogical value
+- Improves user experience without compromising learning outcomes
+
+**Status:** v1.0-ready
 
 ### v1.3 (2025-11-17)
 **Infrastructure Alignment & Workflow Refinement**
