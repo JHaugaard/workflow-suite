@@ -26,8 +26,41 @@ deployment-strategy.md file containing complete hosting plan with deployment wor
 
 <workflow>
 
-<phase id="0" name="check-project-mode">
-<action>Read PROJECT-MODE.md to determine checkpoint strictness level.</action>
+<phase id="0" name="check-prerequisites">
+<action>Verify required handoff documents exist and report workflow context conversationally.</action>
+
+<required-documents>
+- .docs/PROJECT-MODE.md (workflow mode declaration)
+- .docs/tech-stack-decision.md (technology stack selection)
+</required-documents>
+
+<check-process>
+1. Scan .docs/ for required documents
+2. If missing, inform user which prerequisite skill to run first
+3. If present, summarize current workflow state conversationally
+4. Proceed with skill workflow
+</check-process>
+
+<conversational-status>
+When prerequisites are met, report status naturally:
+
+"I can see you've completed the tech stack selection phase. You're in {MODE} mode, and you've chosen {primary-stack} for this project.
+
+Ready to plan your deployment strategy?"
+
+Then proceed with the skill's main workflow.
+</conversational-status>
+
+<missing-prerequisites>
+When prerequisites are missing:
+
+"To use deployment-advisor, you first need to complete the tech stack selection phase.
+
+Run the **tech-stack-advisor** skill to create:
+- .docs/tech-stack-decision.md
+
+**Tip:** You can invoke the **workflow-status** skill anytime to see your current progress."
+</missing-prerequisites>
 </phase>
 
 <phase id="1" name="gather-information">
@@ -106,13 +139,15 @@ deployment-strategy.md file containing complete hosting plan with deployment wor
 </phase>
 
 <phase id="4" name="create-handoff">
-<action>Create deployment-strategy.md in current working directory.</action>
+<action>Create .docs/deployment-strategy.md handoff document.</action>
 
 <purpose>
 - Handoff artifact for project-spinup
 - Session bridge for fresh sessions
 - Deployment record for future reference
 </purpose>
+
+<location>.docs/deployment-strategy.md</location>
 
 <timing>After collaborative refinement and user convergence on recommendation.</timing>
 </phase>
@@ -454,3 +489,25 @@ Status:
   🔵 Phase 2: Deployment Strategy (you are here)
   ⏳ Phase 3: Project Foundation (project-spinup)
 </workflow-status>
+
+---
+
+<integration-notes>
+
+<workflow-position>
+Phase 2 of 3 in the Skills workflow chain.
+Requires: tech-stack-advisor output (.docs/tech-stack-decision.md)
+Produces: .docs/deployment-strategy.md for project-spinup
+</workflow-position>
+
+<status-utility>
+Users can invoke the **workflow-status** skill at any time to:
+- See current workflow progress
+- Check which phases are complete
+- Get guidance on next steps
+- Review all handoff documents
+
+Mention this option when users seem uncertain about their progress.
+</status-utility>
+
+</integration-notes>

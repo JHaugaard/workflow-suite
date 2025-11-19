@@ -22,25 +22,61 @@ Complete project foundation including:
 
 <prerequisites>
 Before invoking, ensure:
-1. PROJECT-MODE.md exists (from project-brief-writer)
-2. tech-stack-decision.md exists (from tech-stack-advisor)
-3. deployment-strategy.md exists (from deployment-advisor)
-4. Project brief documented or clearly described
+1. .docs/PROJECT-MODE.md exists (from project-brief-writer)
+2. .docs/brief-*.md exists (from project-brief-writer)
+3. .docs/tech-stack-decision.md exists (from tech-stack-advisor)
+4. .docs/deployment-strategy.md exists (from deployment-advisor)
 
-Note: If handoff documents don't exist, skill will ask interactively.
+Note: Phase 0 will check for these documents and report status conversationally.
 </prerequisites>
 
 ---
 
 <workflow>
 
-<phase id="0" name="load-context">
-<action>Read all handoff documents from prior skills.</action>
+<phase id="0" name="check-prerequisites">
+<action>Verify required handoff documents exist and report workflow context conversationally.</action>
+
+<required-documents>
+- .docs/PROJECT-MODE.md (workflow mode declaration)
+- .docs/brief-*.md (project brief)
+- .docs/tech-stack-decision.md (technology stack selection)
+- .docs/deployment-strategy.md (deployment strategy)
+</required-documents>
+
+<check-process>
+1. Scan .docs/ for required documents
+2. If missing, inform user which prerequisite skill to run first
+3. If present, summarize current workflow state conversationally
+4. Proceed with skill workflow
+</check-process>
+
+<conversational-status>
+When prerequisites are met, report status naturally:
+
+"I can see you've completed all prerequisite phases. You're in {MODE} mode, with {tech-stack} selected for deployment on {hosting-approach}.
+
+Ready to generate your project foundation?"
+
+Then proceed with the skill's main workflow.
+</conversational-status>
+
+<missing-prerequisites>
+When prerequisites are missing:
+
+"To use project-spinup, you first need to complete the deployment strategy phase.
+
+Run the **deployment-advisor** skill to create:
+- .docs/deployment-strategy.md
+
+**Tip:** You can invoke the **workflow-status** skill anytime to see your current progress."
+</missing-prerequisites>
 
 <documents-to-read>
-1. PROJECT-MODE.md - Workflow commitment (LEARNING/BALANCED/DELIVERY)
-2. tech-stack-decision.md - Complete tech stack with rationale
-3. deployment-strategy.md - Complete deployment strategy
+After prerequisites confirmed, read:
+1. .docs/PROJECT-MODE.md - Workflow commitment (LEARNING/BALANCED/DELIVERY)
+2. .docs/tech-stack-decision.md - Complete tech stack with rationale
+3. .docs/deployment-strategy.md - Complete deployment strategy
 </documents-to-read>
 
 <spinup-approach-prompt>
@@ -533,3 +569,25 @@ Status:
 
 After completion: Skills workflow complete, ready for development
 </workflow-status>
+
+---
+
+<integration-notes>
+
+<workflow-position>
+Phase 3 of 3 in the Skills workflow chain (final phase).
+Requires: deployment-advisor output (.docs/deployment-strategy.md)
+Produces: Complete project foundation ready for development
+</workflow-position>
+
+<status-utility>
+Users can invoke the **workflow-status** skill at any time to:
+- See current workflow progress
+- Check which phases are complete
+- Get guidance on next steps
+- Review all handoff documents
+
+Mention this option when users seem uncertain about their progress.
+</status-utility>
+
+</integration-notes>
