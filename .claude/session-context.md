@@ -1,7 +1,7 @@
 # Skills Workflow Refinement - Session Context
 
 **Last Updated:** 2025-11-19
-**Current Status:** workflow-status Skill Created - Pending Review & Integration
+**Current Status:** ci-cd-implement Skill Created - Pending Review & Deployment
 **Model Recommendation:** Sonnet 4.5 (claude-sonnet-4-5) for all phases
 
 ---
@@ -405,6 +405,60 @@ Process:
    - tech-stack-advisor
    - deployment-advisor
    - project-spinup
+4. Deploy to ~/.claude/skills/ for production use
+
+---
+
+## Post-Refinement: ci-cd-implement Skill Development
+
+### Session: 2025-11-19
+
+**Objective:** Create new ci-cd-implement utility skill to analyze projects and generate CI/CD pipelines tailored to tech stack and deployment target.
+
+**Design Discussion:**
+- Explored whether CI/CD should be integrated into existing skills or standalone
+- Decided on standalone utility skill (Option B) for several reasons:
+  - Not every project reaches deployment stage
+  - Can be invoked weeks/months after spinup
+  - Analyzes actual project state rather than relying on workflow handoffs
+  - Can be re-invoked as requirements evolve
+  - Works on any project, not just workflow-generated ones
+
+**Accomplishments:**
+- Created ci-cd-implement skill using skill-foundry process
+- First real-world test of skill-foundry skill (worked well)
+- Designed 7-phase workflow: analyze-project → gather-preferences → determine-complexity → generate-ci → generate-cd → document-secrets → summarize
+- Created GitHub Actions templates for 4 deployment targets
+
+**Deliverables:**
+```
+/Volumes/dev/skill-foundry/work/ci-cd-implement/
+├── SKILL.md           # XML-structured skill instructions (~450 lines)
+└── README.md          # Minimal documentation
+```
+
+**Key Features:**
+- Project analysis for tech stack, tests, linting, build commands
+- User choice: CI only, CD only, or both
+- Complexity-based environment strategy (production-only vs staging+production)
+- GitHub Actions workflows for all 4 deployment targets:
+  - cloudflare-pages (Wrangler)
+  - fly-io (flyctl)
+  - vps-docker (SSH + docker compose)
+  - hostinger-shared (rsync/FTP)
+- Deployment and rollback scripts for VPS targets
+- CICD-SECRETS.md with setup instructions per target
+
+**skill-foundry Feedback:**
+- Structure was clear and workflow logical
+- XML tag guidance provided good flexibility
+- Templates were practical scaffolding
+- Minor note: could support "just build it" mode without explicit review phase
+
+**Next Steps:**
+1. User review of ci-cd-implement skill
+2. Test on a real project
+3. Refine based on results
 4. Deploy to ~/.claude/skills/ for production use
 
 ---
