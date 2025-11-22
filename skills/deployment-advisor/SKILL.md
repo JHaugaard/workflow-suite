@@ -1,10 +1,15 @@
-# deployment-advisor
-
-<metadata>
+---
 name: deployment-advisor
-description: Recommend hosting strategy based on chosen tech stack and project needs. Provides deployment workflow, cost breakdown, and scaling path.
-allowed-tools: [Read, Grep, Glob, WebSearch, Write]
-</metadata>
+description: "Recommend hosting strategy based on chosen tech stack and project needs. Provides deployment workflow, cost breakdown, and scaling path."
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+  - WebSearch
+  - Write
+---
+
+# deployment-advisor
 
 <purpose>
 Recommend hosting and deployment strategies tailored to chosen tech stack, project requirements, and infrastructure constraints. Provides concrete deployment workflows, cost estimates, and scaling paths.

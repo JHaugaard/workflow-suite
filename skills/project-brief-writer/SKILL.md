@@ -1,3 +1,8 @@
+---
+name: project-brief-writer
+description: "Transform rough project ideas into problem-focused briefs that preserve learning opportunities and feed into the Skills workflow (tech-stack-advisor → deployment-advisor → project-spinup)."
+---
+
 # project-brief-writer
 
 <purpose>

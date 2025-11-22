@@ -1,10 +1,15 @@
-# tech-stack-advisor
-
-<metadata>
+---
 name: tech-stack-advisor
-description: Analyze project requirements and recommend appropriate technology stacks with detailed rationale. Provides primary recommendation, alternatives, and ruled-out options with explanations.
-allowed-tools: [Read, Grep, Glob, WebSearch, Write]
-</metadata>
+description: "Analyze project requirements and recommend appropriate technology stacks with detailed rationale. Provides primary recommendation, alternatives, and ruled-out options with explanations."
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+  - WebSearch
+  - Write
+---
+
+# tech-stack-advisor
 
 <purpose>
 Help make informed technology stack decisions by analyzing project requirements, constraints, and learning goals. Provides recommendations with detailed rationales, teaching strategic thinking about tech choices.

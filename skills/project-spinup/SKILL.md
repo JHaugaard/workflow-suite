@@ -1,9 +1,9 @@
-# project-spinup
-
-<metadata>
+---
 name: project-spinup
-description: Generate complete project foundations with personalized claude.md, Docker setup, and project structure. Supports Guided Setup or Quick Start.
-</metadata>
+description: "Generate complete project foundations with personalized claude.md, Docker setup, and project structure. Supports Guided Setup or Quick Start."
+---
+
+# project-spinup
 
 <purpose>
 Generate a complete, ready-to-code project foundation tailored to development workflow, infrastructure, and chosen tech stack. Creates comprehensive claude.md for AI assistant context, Docker configuration, directory structure, and either guided learning prompts or full scaffolding.

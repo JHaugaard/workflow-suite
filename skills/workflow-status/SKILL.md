@@ -1,9 +1,9 @@
-# workflow-status
-
-<metadata>
+---
 name: workflow-status
-description: Display project workflow progress by reading handoff documents in .docs/ directory. This skill should be used when users want to check their workflow status, see what phase they're in, or when other workflow skills need to verify prerequisites. Provides reusable prerequisite-checking templates for integration with other workflow skills. (user)
-</metadata>
+description: "Display project workflow progress by reading handoff documents in .docs/ directory. This skill should be used when users want to check their workflow status, see what phase they're in, or when other workflow skills need to verify prerequisites. Provides reusable prerequisite-checking templates for integration with other workflow skills."
+---
+
+# workflow-status
 
 <purpose>
 Read all handoff documents in .docs/ subdirectory and present a clear picture of workflow progress, including completed phases, pending phases, and actionable next steps. Also provide reusable prerequisite-checking logic for other workflow skills to use in their Step 0.
